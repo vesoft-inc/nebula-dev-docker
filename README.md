@@ -9,4 +9,9 @@ Docker containers for developers to build Nebula project sources.
 ## Usage
 
     $ docker pull xl4times/nebula-docker:ubuntu
-    $ docker run --rm -ti --security-opt seccomp=unconfined -v /path/to/nebula/source:/home/nebula --name nebula xl4times/nebula-docker:ubuntu bash
+    $ docker run --rm -ti \
+          --security-opt seccomp=unconfined \
+          -v /path/to/nebula/source:/home/nebula \
+          --name nebula \
+          xl4times/nebula-docker:ubuntu \
+          bash
