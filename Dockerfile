@@ -17,7 +17,7 @@ RUN yum -y install git git-lfs \
   ncurses \
   readline \
   maven \
-  java-1.8.0-openjdk
+  java-1.8.0-openjdk \
   && yum clean all \
   && rm -rf /var/cache/yum
 
