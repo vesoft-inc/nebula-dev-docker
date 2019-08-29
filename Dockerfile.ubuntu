@@ -1,5 +1,7 @@
 FROM ubuntu:bionic # 18.04
 
+LABEL maintainer="yee.yi@vesoft.com"
+
 RUN apt-get update && apt-get install -y locales \
   git \
   git-lfs \
