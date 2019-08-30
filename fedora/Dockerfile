@@ -18,6 +18,7 @@ RUN yum update && yum -y install git git-lfs \
   readline \
   maven \
   java-1.8.0-openjdk \
+  && git lfs install \
   && yum clean all \
   && rm -rf /var/cache/yum
 

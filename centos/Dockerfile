@@ -2,15 +2,20 @@ FROM centos:7.5.1804
 
 LABEL maintainer="yee.yi@vesoft.com"
 
-RUN yum update && yum -y install git git-lfs \
+RUN yum update && yum -y install git \
+  wget \
   libtool \
   autoconf \
   autoconf-archive \
   automake \
+  make \
   perl-WWW-Curl \
   libstdc++-static \
+  ncurses-devel \
   maven \
   java-1.8.0-openjdk \
+  && sh -c "$(wget https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh -O -)" \
+  && yum install -y git-lfs \
   && yum clean all \
   && rm -rf /var/cache/yum
 
@@ -20,13 +25,13 @@ RUN wget https://nebula-graph.oss-cn-hangzhou.aliyuncs.com/build-deb/centos-7.5-
   && chmod -R 755 /home/engshare \
   && rm -rf centos-7.5-1804*
 
-RUN echo $'alias cmake=\'/home/engshare/cmake/bin/cmake -DCMAKE_C_COMPILER=/home/engshare/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/home/engshare/gcc/bin/g++ -DNEBULA_GPERF_BIN_DIR=/home/engshare/gperf/bin -DNEBULA_FLEX_ROOT=/home/engshare/flex -DNEBULA_BOOST_ROOT=/home/engshare/boost -DNEBULA_OPENSSL_ROOT=/home/engshare/openssl -DNEBULA_KRB5_ROOT=/home/engshare/krb5 -DNEBULA_LIBUNWIND_ROOT=/home/engshare/libunwind\'\n\
-  alias ctest=\'/home/engshare/cmake/bin/ctest\'' >> ~/.bashrc \
-  && source ~/.bashrc
+RUN alias cmake='/home/engshare/cmake/bin/cmake -DCMAKE_C_COMPILER=/home/engshare/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/home/engshare/gcc/bin/g++ -DNEBULA_GPERF_BIN_DIR=/home/engshare/gperf/bin -DNEBULA_FLEX_ROOT=/home/engshare/flex -DNEBULA_BOOST_ROOT=/home/engshare/boost -DNEBULA_OPENSSL_ROOT=/home/engshare/openssl -DNEBULA_KRB5_ROOT=/home/engshare/krb5 -DNEBULA_LIBUNWIND_ROOT=/home/engshare/libunwind' \
+  && alias ctest='/home/engshare/cmake/bin/ctest'
 
 RUN mkdir -p /home/nebula \
   && git clone https://github.com/vesoft-inc/nebula-3rdparty.git \
   && cd nebula-3rdparty \
+  && git lfs install \
   && cmake . && make && make install \
   && cd .. && rm -rf nebula-3rdparty
 
