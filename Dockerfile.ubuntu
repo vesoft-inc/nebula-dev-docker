@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 LABEL maintainer="yee.yi@vesoft.com"
 
-COPY ./ubuntu/sources.list.d/aliyun.list /etc/apt/sources.list
+# COPY ./ubuntu/sources.list.d/aliyun.list /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y locales \
   vim \
