@@ -14,11 +14,10 @@ RUN yum update && yum -y install git git-lfs \
   && yum clean all \
   && rm -rf /var/cache/yum
 
-RUN adduser engshare --home /home/engshare --system --group \
-  && chmod -R 755 /home/engshare \
-  && wget https://nebula-graph.oss-cn-hangzhou.aliyuncs.com/build-deb/centos-7.5-1804.tar.gz \
+RUN wget https://nebula-graph.oss-cn-hangzhou.aliyuncs.com/build-deb/centos-7.5-1804.tar.gz \
   && tar xf centos-7.5-1804.tar.gz  \
   && rpm -ivh centos-7.5-1804/*.rpm \
+  && chmod -R 755 /home/engshare \
   && rm -rf centos-7.5-1804*
 
 RUN echo $'alias cmake=\'/home/engshare/cmake/bin/cmake -DCMAKE_C_COMPILER=/home/engshare/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/home/engshare/gcc/bin/g++ -DNEBULA_GPERF_BIN_DIR=/home/engshare/gperf/bin -DNEBULA_FLEX_ROOT=/home/engshare/flex -DNEBULA_BOOST_ROOT=/home/engshare/boost -DNEBULA_OPENSSL_ROOT=/home/engshare/openssl -DNEBULA_KRB5_ROOT=/home/engshare/krb5 -DNEBULA_LIBUNWIND_ROOT=/home/engshare/libunwind\'\n\

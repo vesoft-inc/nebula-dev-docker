@@ -2,6 +2,8 @@ FROM ubuntu:bionic # 18.04
 
 LABEL maintainer="yee.yi@vesoft.com"
 
+COPY ./apt.d/aliyun.list /etc/apt.d/aliyun.list
+
 RUN apt-get update && apt-get install -y locales \
   git \
   git-lfs \
@@ -19,11 +21,10 @@ RUN apt-get update && apt-get install -y locales \
 
 ENV LANG en_US.utf8
 
-RUN adduser --system --group --home /home/engshare engshare \
-  && chmod -R 755 /home/engshare \
-  && wget https://nebula-graph.oss-cn-hangzhou.aliyuncs.com/build-deb/ubuntu1804.tar.gz \
+RUN wget https://nebula-graph.oss-cn-hangzhou.aliyuncs.com/build-deb/ubuntu1804.tar.gz \
   && tar xf ubuntu1804.tar.gz \
   && dpkg -i ubuntu1804/*.deb \
+  && chmod -R 755 /home/engshare \
   && wget http://ftp.gnu.org/gnu/bison/bison-3.0.5.tar.gz \
   && tar xf bison-3.0.5.tar.gz \
   && cd bison-3.0.5 && ./configure && make && make install && cd .. \
