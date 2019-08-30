@@ -41,6 +41,7 @@ export LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH"' >> ~/.bashrc && m
 
 COPY ./build-3rdparty.sh /home/nebula/
 
+RUN git lfs install && git clone https://github.com/vesoft-inc/nebula-3rdparty.git /home/nebula/nebula-3rdparty
 RUN ./home/nebula/build-3rdparty.sh
 
 WORKDIR /home/nebula
