@@ -2,7 +2,7 @@ FROM centos:7.5.1804
 
 LABEL maintainer="yee.yi@vesoft.com"
 
-RUN yum -y install git git-lfs \
+RUN yum update && yum -y install git git-lfs \
   libtool \
   autoconf \
   autoconf-archive \

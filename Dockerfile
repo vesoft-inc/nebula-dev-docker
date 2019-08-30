@@ -2,7 +2,7 @@ FROM fedora:30
 
 LABEL maintainer="yee.yi@vesoft.com"
 
-RUN yum -y install git git-lfs \
+RUN yum update && yum -y install git git-lfs \
   autoconf \
   automake \
   libtool \
