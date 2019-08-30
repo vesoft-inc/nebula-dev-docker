@@ -2,13 +2,15 @@ FROM ubuntu:18.04
 
 LABEL maintainer="yee.yi@vesoft.com"
 
-COPY ./sources.list.d/aliyun.list /etc/apt/sources.list
+# COPY ./sources.list.d/aliyun.list /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y locales \
+  vim \
   wget \
   git \
   git-lfs \
   gcc-multilib \
+  liblzma-dev \
   libtool \
   autoconf \
   autoconf-archive \
@@ -39,11 +41,9 @@ export LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH"' >> ~/.bashrc
 
 RUN mkdir -p /home/nebula && cd /home/nebula \
   && git lfs install \
-  && git clone https://github.com/vesoft-inc/nebula-3rdparty.git
-
-RUN source ~/.bashrc && cd /home/nebula/nebula-3rdparty \
-  && cmake && make && make install \
+  && git clone https://github.com/vesoft-inc/nebula-3rdparty.git \
+  && cd nebula-3rdparty \
+  && /bin/bash -c "source ~/.bashrc && cmake && make && make install" \
   && cd .. && rm -rf nebula-3rdparty
 
 WORKDIR /home/nebula
-

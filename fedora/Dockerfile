@@ -2,7 +2,7 @@ FROM fedora:30
 
 LABEL maintainer="yee.yi@vesoft.com"
 
-RUN yum update && yum -y install git git-lfs \
+RUN yum update && yum -y install git \
   autoconf \
   automake \
   libtool \
@@ -18,6 +18,8 @@ RUN yum update && yum -y install git git-lfs \
   readline \
   maven \
   java-1.8.0-openjdk \
+  && sh -c "$(wget https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh -O -)" \
+  && yum install -y git-lfs \
   && git lfs install \
   && yum clean all \
   && rm -rf /var/cache/yum
@@ -31,4 +33,3 @@ RUN mkdir -p /home/nebula \
   && popd && cd .. && rm -rf nebula-3rdparty
 
 WORKDIR /home/nebula
-
