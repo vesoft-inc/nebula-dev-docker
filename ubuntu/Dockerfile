@@ -37,13 +37,10 @@ RUN wget https://nebula-graph.oss-cn-hangzhou.aliyuncs.com/build-deb/ubuntu1804.
 
 RUN echo 'alias ctest="/home/engshare/cmake/bin/ctest"\n\
 alias cmake="/home/engshare/cmake/bin/cmake -DCMAKE_C_COMPILER=/home/engshare/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/home/engshare/gcc/bin/g++ -DNEBULA_GPERF_BIN_DIR=/home/engshare/gperf/bin -DNEBULA_FLEX_ROOT=/home/engshare/flex -DNEBULA_BOOST_ROOT=/home/engshare/boost -DNEBULA_OPENSSL_ROOT=/home/engshare/openssl -DNEBULA_KRB5_ROOT=/home/engshare/krb5 -DNEBULA_LIBUNWIND_ROOT=/home/engshare/libunwind -DNEBULA_READLINE_ROOT=/home/engshare/readline -DNEBULA_NCURSES_ROOT=/home/engshare/ncurses"\n\
-export LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH"' >> ~/.bashrc
+export LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH"' >> ~/.bashrc && mkdir -p /home/nebula
 
-RUN mkdir -p /home/nebula && cd /home/nebula \
-  && git lfs install \
-  && git clone https://github.com/vesoft-inc/nebula-3rdparty.git \
-  && cd nebula-3rdparty \
-  && /bin/bash -c "source ~/.bashrc && cmake && make && make install" \
-  && cd .. && rm -rf nebula-3rdparty
+COPY ./build-3rdparty.sh /home/nebula/
+
+RUN ./home/nebula/build-3rdparty.sh
 
 WORKDIR /home/nebula

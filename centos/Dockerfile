@@ -10,6 +10,7 @@ RUN yum update && yum -y install git \
   autoconf-archive \
   automake \
   make \
+  perl \
   perl-WWW-Curl \
   libstdc++-static \
   ncurses-devel \
@@ -21,24 +22,19 @@ RUN yum update && yum -y install git \
   && yum clean all \
   && rm -rf /var/cache/yum
 
-RUN adduser --system --home-dir /home/engshare engshare && chmod -R 755 /home/engshare
+RUN mkdir -p /home/engshare && adduser --system --home-dir /home/engshare engshare && chmod -R 755 /home/engshare
 
 RUN wget https://nebula-graph.oss-cn-hangzhou.aliyuncs.com/build-deb/centos-7.5-1804.tar.gz \
   && tar xf centos-7.5-1804.tar.gz  \
   && rpm -ivh centos-7.5-1804/*.rpm \
-  && chmod -R 755 /home/engshare \
   && rm -rf centos-7.5-1804*
 
 RUN echo 'alias ctest="/home/engshare/cmake/bin/ctest"\n\
   alias cmake="/home/engshare/cmake/bin/cmake -DCMAKE_C_COMPILER=/home/engshare/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/home/engshare/gcc/bin/g++ -DNEBULA_GPERF_BIN_DIR=/home/engshare/gperf/bin -DNEBULA_FLEX_ROOT=/home/engshare/flex -DNEBULA_BOOST_ROOT=/home/engshare/boost -DNEBULA_OPENSSL_ROOT=/home/engshare/openssl -DNEBULA_KRB5_ROOT=/home/engshare/krb5 -DNEBULA_LIBUNWIND_ROOT=/home/engshare/libunwind -DNEBULA_READLINE_ROOT=/home/engshare/readline -DNEBULA_NCURSES_ROOT=/home/engshare/ncurses"\n\
-  export LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH"' >> ~/.bashrc \
-  && /bin/bash -c "source ~/.bashrc"
+  export LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH"' >> ~/.bashrc && mkdir -p /home/nebula
 
-RUN mkdir -p /home/nebula \
-  && git lfs install \
-  && git clone https://github.com/vesoft-inc/nebula-3rdparty.git \
-  && cd nebula-3rdparty \
-  && cmake . && make && make install \
-  && cd .. && rm -rf nebula-3rdparty
+COPY ./build-3rdparty.sh /home/nebula/
+
+RUN ./build-3rdparty.sh
 
 WORKDIR /home/nebula
