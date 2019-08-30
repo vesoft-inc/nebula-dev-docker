@@ -12,6 +12,7 @@ RUN yum update && yum -y install git \
   perl-WWW-Curl \
   libstdc++-static \
   ncurses-devel \
+  xz-devel \
   maven \
   java-1.8.0-openjdk \
   && sh -c "$(wget https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh -O -)" \
