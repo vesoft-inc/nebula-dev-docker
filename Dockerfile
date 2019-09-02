@@ -9,11 +9,13 @@ RUN yum update -y && yum -y install vim wget \
   automake \
   libtool \
   cmake \
+  make \
   bison \
   unzip \
   boost \
   gperf \
-  krb5 \
+  gcc-c++ \
+  krb5-libs \
   openssl \
   libunwind \
   ncurses \
