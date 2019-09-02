@@ -16,6 +16,7 @@ RUN yum update -y && yum -y install git \
   ncurses-devel \
   xz-devel \
   maven \
+  unzip \
   java-1.8.0-openjdk \
   && sh -c "$(wget https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh -O -)" \
   && yum install -y git-lfs \
