@@ -16,9 +16,10 @@ RUN yum update -y && yum -y install vim wget \
   boost-devel \
   gperf \
   gcc-c++ \
-  krb5-libs \
   openssl-devel \
   libunwind \
+  xz-devel \
+  krb5-devel \
   ncurses-devel \
   readline-devel \
   maven \
