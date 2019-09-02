@@ -33,9 +33,10 @@ RUN mkdir -p /home/nebula && cd /home/nebula \
   && rm -rf CMakeCache.txt \
   && cmake -DSKIP_JAVA_JAR=ON . \
   && make && make install \
-  && cd third-party/fbthrift/thrift/lib/java/thrift \
-  && mvn compile install \
   && cd /home/nebula \
   && rm -rf /home/nebula/*
+
+  # && cd third-party/fbthrift/thrift/lib/java/thrift \
+  # && mvn compile install \
 
 WORKDIR /home/nebula
