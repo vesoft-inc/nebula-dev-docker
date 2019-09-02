@@ -2,7 +2,9 @@ FROM fedora:30
 
 LABEL maintainer="yee.yi@vesoft.com"
 
-RUN yum update && yum -y install git \
+RUN yum update -y && yum -y install vim wget \
+  git \
+  git-lfs \
   autoconf \
   automake \
   libtool \
@@ -18,18 +20,19 @@ RUN yum update && yum -y install git \
   readline \
   maven \
   java-1.8.0-openjdk \
-  && sh -c "$(wget https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh -O -)" \
-  && yum install -y git-lfs \
-  && git lfs install \
   && yum clean all \
   && rm -rf /var/cache/yum
 
-RUN mkdir -p /home/nebula \
-  && git clone https://github.com/vesoft-inc/nebula-3rdparty.git \
+RUN mkdir -p /home/nebula && cd /home/nebula \
+  && wget https://wsg-static.oss-cn-hangzhou.aliyuncs.com/others/nebula-3rdparty.tar.gz -O nebula-3rdparty.tar.gz \
+  && tar zxf nebula-3rdparty.tar.gz \
   && cd nebula-3rdparty \
-  && cmake . && make && make install \
-  && pushd && cd third-party/fbthrift/thrift/lib/java/thrift \
+  && rm -rf CMakeCache.txt \
+  && cmake -DSKIP_JAVA_JAR=OFF . \
+  && make && make install \
+  && cd third-party/fbthrift/thrift/lib/java/thrift \
   && mvn compile install \
-  && popd && cd .. && rm -rf nebula-3rdparty
+  && cd /home/nebula \
+  && rm -rf /home/nebula/*
 
 WORKDIR /home/nebula
