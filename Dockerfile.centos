@@ -41,7 +41,7 @@ RUN mkdir -p /home/nebula && cd /home/nebula \
   && tar zxf nebula-3rdparty.tar.gz \
   && cd nebula-3rdparty \
   && rm -rf CMakeCache.txt \
-  && LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH" /home/engshare/cmake/bin/cmake -DCMAKE_C_COMPILER=/home/engshare/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/home/engshare/gcc/bin/g++ -DNEBULA_GPERF_BIN_DIR=/home/engshare/gperf/bin -DNEBULA_FLEX_ROOT=/home/engshare/flex -DNEBULA_BOOST_ROOT=/home/engshare/boost -DNEBULA_OPENSSL_ROOT=/home/engshare/openssl -DNEBULA_KRB5_ROOT=/home/engshare/krb5 -DNEBULA_LIBUNWIND_ROOT=/home/engshare/libunwind -DNEBULA_READLINE_ROOT=/home/engshare/readline -DNEBULA_NCURSES_ROOT=/home/engshare/ncurses -DSKIP_JAVA_JAR=OFF . \
+  && LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH" /home/engshare/cmake/bin/cmake -DCMAKE_C_COMPILER=/home/engshare/gcc/bin/gcc -DCMAKE_CXX_COMPILER=/home/engshare/gcc/bin/g++ -DNEBULA_GPERF_BIN_DIR=/home/engshare/gperf/bin -DNEBULA_FLEX_ROOT=/home/engshare/flex -DNEBULA_BOOST_ROOT=/home/engshare/boost -DNEBULA_OPENSSL_ROOT=/home/engshare/openssl -DNEBULA_KRB5_ROOT=/home/engshare/krb5 -DNEBULA_LIBUNWIND_ROOT=/home/engshare/libunwind -DNEBULA_READLINE_ROOT=/home/engshare/readline -DNEBULA_NCURSES_ROOT=/home/engshare/ncurses -DSKIP_JAVA_JAR=ON . \
   && LIBRARY_PATH="/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH" make && make install \
   && cd third-party/fbthrift/thrift/lib/java/thrift \
   && mvn compile install \

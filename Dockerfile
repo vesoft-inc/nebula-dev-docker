@@ -7,19 +7,20 @@ RUN yum update -y && yum -y install vim wget \
   git-lfs \
   autoconf \
   automake \
+  flex \
   libtool \
   cmake \
   make \
   bison \
   unzip \
-  boost \
+  boost-devel \
   gperf \
   gcc-c++ \
   krb5-libs \
-  openssl \
+  openssl-devel \
   libunwind \
-  ncurses \
-  readline \
+  ncurses-devel \
+  readline-devel \
   maven \
   java-1.8.0-openjdk \
   && yum clean all \
@@ -30,7 +31,7 @@ RUN mkdir -p /home/nebula && cd /home/nebula \
   && tar zxf nebula-3rdparty.tar.gz \
   && cd nebula-3rdparty \
   && rm -rf CMakeCache.txt \
-  && cmake -DSKIP_JAVA_JAR=OFF . \
+  && cmake -DSKIP_JAVA_JAR=ON . \
   && make && make install \
   && cd third-party/fbthrift/thrift/lib/java/thrift \
   && mvn compile install \
