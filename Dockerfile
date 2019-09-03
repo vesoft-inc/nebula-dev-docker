@@ -1,37 +1,47 @@
-FROM fedora:30
+FROM fedora:29
 
 LABEL maintainer="yee.yi@vesoft.com"
 
 RUN yum update -y && yum -y install vim wget \
-  git \
-  git-lfs \
-  autoconf \
-  automake \
-  flex \
-  libtool \
-  cmake \
-  make \
-  bison \
-  unzip \
-  boost-devel \
-  gperf \
-  gcc-c++ \
-  openssl-devel \
-  libunwind \
-  xz-devel \
-  krb5-devel \
-  ncurses-devel \
-  readline-devel \
-  maven \
-  java-1.8.0-openjdk \
+    git \
+    git-lfs \
+    autoconf \
+    autoconf-archive \
+    automake \
+    flex \
+    libtool \
+    cmake \
+    make \
+    bison \
+    bzip2-devel \
+    unzip \
+    boost \
+    boost-devel \
+    boost-static \
+    gperf \
+    gcc \
+    gcc-c++ \
+    openssl \
+    openssl-devel \
+    libunwind \
+    lz4-devel \
+    xz-devel \
+    krb5-devel \
+    ncurses-devel \
+    readline-devel \
+    perl \
+    perl-WWW-Curl \
+    libstdc++-static \
+    maven \
+    file \
+    python \
+    java-1.8.0-openjdk \
   && yum clean all \
   && rm -rf /var/cache/yum
 
-RUN mkdir -p /home/nebula && cd /home/nebula \
-  && wget https://wsg-static.oss-cn-hangzhou.aliyuncs.com/others/nebula-3rdparty.tar.gz -O nebula-3rdparty.tar.gz \
-  && tar zxf nebula-3rdparty.tar.gz \
-  && cd nebula-3rdparty \
-  && rm -rf CMakeCache.txt \
+RUN mkdir -p /home/nebula \
+  && git clone https://github.com/vesoft-inc/nebula-3rdparty.git /home/nebula/nebula-3rdparty \
+  && cd /home/nebula/nebula-3rdparty \
   && cmake -DSKIP_JAVA_JAR=ON . \
   && make && make install \
   && cd /home/nebula \
