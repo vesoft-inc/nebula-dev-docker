@@ -5,21 +5,21 @@ LABEL maintainer="yee.yi@vesoft.com"
 # COPY ./ubuntu/sources.list.d/aliyun.list /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates locales \
-  vim \
-  wget \
-  git \
-  git-lfs \
-  gcc-multilib \
-  liblzma-dev \
-  libtool \
-  autoconf \
-  autoconf-archive \
-  automake \
-  make \
-  python \
-  maven \
-  openjdk-8-jdk \
-  unzip \
+    vim \
+    wget \
+    git \
+    git-lfs \
+    gcc-multilib \
+    liblzma-dev \
+    libtool \
+    autoconf \
+    autoconf-archive \
+    automake \
+    make \
+    python \
+    maven \
+    openjdk-8-jdk \
+    unzip \
   && rm -rf /var/lib/apt/lists/* \
   && update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java  \
   && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8

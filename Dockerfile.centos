@@ -3,23 +3,23 @@ FROM centos:7.5.1804
 LABEL maintainer="yee.yi@vesoft.com"
 
 RUN yum update -y && yum -y install git \
-  vim \
-  wget \
-  libtool \
-  autoconf \
-  autoconf-archive \
-  automake \
-  make \
-  perl \
-  perl-WWW-Curl \
-  libstdc++-static \
-  ncurses-devel \
-  readline-devel \
-  xz-devel \
-  maven \
-  unzip \
-  file \
-  java-1.8.0-openjdk \
+    vim \
+    wget \
+    libtool \
+    autoconf \
+    autoconf-archive \
+    automake \
+    make \
+    perl \
+    perl-WWW-Curl \
+    libstdc++-static \
+    ncurses-devel \
+    readline-devel \
+    xz-devel \
+    maven \
+    unzip \
+    file \
+    java-1.8.0-openjdk \
   && sh -c "$(wget https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh -O -)" \
   && yum install -y git-lfs \
   && yum clean all \
