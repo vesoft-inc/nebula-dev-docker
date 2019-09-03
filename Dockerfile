@@ -23,7 +23,7 @@ RUN yum update -y && yum -y install vim wget \
     gcc-c++ \
     openssl \
     openssl-devel \
-    libunwind \
+    libunwind-devel \
     lz4-devel \
     xz-devel \
     krb5-devel \
