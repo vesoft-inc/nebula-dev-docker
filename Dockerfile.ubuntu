@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
     git \
     gcc-multilib \
     liblzma-dev \
+    libncurses5-dev \
+    libreadline-dev \
     libtool \
     autoconf \
     autoconf-archive \
