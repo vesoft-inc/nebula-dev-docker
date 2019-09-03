@@ -40,7 +40,7 @@ RUN yum update -y && yum -y install vim wget \
   && rm -rf /var/cache/yum
 
 RUN mkdir -p /home/nebula \
-  && git clone https://github.com/vesoft-inc/nebula-3rdparty.git /home/nebula/nebula-3rdparty \
+  && git clone https://github.com/yixinglu/nebula-3rdparty.git /home/nebula/nebula-3rdparty \
   && cd /home/nebula/nebula-3rdparty \
   && cmake -DSKIP_JAVA_JAR=ON . \
   && make && make install \
