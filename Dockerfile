@@ -47,7 +47,7 @@ RUN yum update -y && yum -y install \
   && rm -rf /var/cache/yum
 
 RUN mkdir -p /home/nebula \
-  && git clone https://github.com/vesoft-inc/nebula-3rdparty.git /home/nebula/nebula-3rdparty \
+  && git clone --single-branch --branch master https://github.com/vesoft-inc/nebula-3rdparty.git /home/nebula/nebula-3rdparty \
   && cd /home/nebula/nebula-3rdparty \
   && cmake -DSKIP_JAVA_JAR=ON . \
   && make && make install \
