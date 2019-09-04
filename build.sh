@@ -4,5 +4,5 @@ docker run --rm -ti \
   --security-opt seccomp=unconfined \
   -v "$1":/home/nebula \
   --name nebula \
-  nebula-dev:ubuntu \
+  nebula-dev:latest \
   bash
