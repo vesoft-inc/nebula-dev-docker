@@ -12,12 +12,14 @@ RUN yum update -y && yum -y install \
     boost-static \
     bzip2-devel \
     cmake \
+    curl \
     flex \
     file \
     gcc \
     gcc-c++ \
     git \
     gperf \
+    hostname \
     java-1.8.0-openjdk \
     java-1.8.0-openjdk-devel \
     krb5-devel \
