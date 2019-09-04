@@ -13,8 +13,8 @@ RUN yum update -y && yum -y install \
     bzip2-devel \
     cmake \
     curl \
-    flex \
     file \
+    flex \
     gcc \
     gcc-c++ \
     git \
@@ -28,7 +28,6 @@ RUN yum update -y && yum -y install \
     libunwind \
     libunwind-devel \
     libtool \
-    lzma-devel \
     make \
     maven \
     ncurses \
@@ -43,6 +42,7 @@ RUN yum update -y && yum -y install \
     unzip \
     vim \
     wget \
+    xz-devel \
   && yum clean all \
   && rm -rf /var/cache/yum
 
