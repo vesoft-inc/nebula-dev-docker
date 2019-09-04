@@ -26,8 +26,6 @@ RUN yum update -y && yum -y install \
     libunwind \
     libunwind-devel \
     libtool \
-    lz4-devel \
-    lz4-libs \
     make \
     maven \
     ncurses \
@@ -42,7 +40,6 @@ RUN yum update -y && yum -y install \
     unzip \
     vim \
     wget \
-    xz-devel \
   && yum clean all \
   && rm -rf /var/cache/yum
 
