@@ -12,12 +12,14 @@ RUN yum update -y && yum -y install \
     boost-static \
     bzip2-devel \
     cmake \
+    curl \
     flex \
     file \
     gcc \
     gcc-c++ \
     git \
     gperf \
+    hostname \
     java-1.8.0-openjdk \
     java-1.8.0-openjdk-devel \
     krb5-devel \
@@ -26,8 +28,6 @@ RUN yum update -y && yum -y install \
     libunwind \
     libunwind-devel \
     libtool \
-    lz4-devel \
-    lz4-libs \
     make \
     maven \
     ncurses \
@@ -42,7 +42,6 @@ RUN yum update -y && yum -y install \
     unzip \
     vim \
     wget \
-    xz-devel \
   && yum clean all \
   && rm -rf /var/cache/yum
 
