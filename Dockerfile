@@ -28,6 +28,7 @@ RUN yum update -y && yum -y install \
     libunwind \
     libunwind-devel \
     libtool \
+    lzma-devel \
     make \
     maven \
     ncurses \
