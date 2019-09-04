@@ -4,7 +4,6 @@ LABEL maintainer="yee.yi@vesoft.com"
 
 RUN yum update -y && yum -y install vim wget \
     git \
-    git-lfs \
     autoconf \
     autoconf-archive \
     automake \
