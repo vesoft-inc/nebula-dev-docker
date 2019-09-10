@@ -29,7 +29,7 @@ RUN yum update -y \
 
 RUN scl enable devtoolset-8 -- bash \
   && mkdir -p /home/nebula \
-  && ln -snf /opt/rh/devtoolset-8/enable /etc/profile.d/devtoolset-8.sh
+  && ln -snf /opt/rh/devtoolset-8/enable /etc/profile.d/devtoolset-8-enable.sh
 
 ENV NEBULA_HOME /home/nebula
 
@@ -42,7 +42,7 @@ RUN ${NEBULA_HOME}/install-deps.sh
 # Build and Install thirdparty
 RUN git clone --single-branch --branch master https://github.com/vesoft-inc/nebula-3rdparty.git ${NEBULA_HOME}/nebula-3rdparty \
   && cd ${NEBULA_HOME}/nebula-3rdparty \
-  && . /etc/profile.d/devtoolset-8.sh \
+  && . /etc/profile.d/devtoolset-8-enable.sh \
   && cmake -DSKIP_JAVA_JAR=ON . \
   && make && make install \
   && cd ${NEBULA_HOME} \

@@ -8,7 +8,7 @@ EXTRA_CXXFLAGS="-O2 -m64 -march=x86-64"
 EXTRA_PIC_CXXFLAGS="${EXTRA_CXXFLAGS} -fPIC -DPIC"
 EXTRA_LDFLAGS="-static-libgcc -static-libstdc++"
 
-. /etc/profile.d/devtoolset-8.sh
+. /etc/profile.d/devtoolset-8-enable.sh
 
 # Install openssl-1.1.0h
 wget -qO - https://www.openssl.org/source/old/1.1.0/openssl-1.1.0h.tar.gz | tar zxf - -C ${NEBULA_HOME}
