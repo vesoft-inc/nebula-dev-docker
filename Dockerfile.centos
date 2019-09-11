@@ -17,12 +17,15 @@ RUN yum update -y \
     file \
     git \
     java-1.8.0-openjdk \
+    java-1.8.0-openjdk-devel \
     libtool \
     make \
     maven \
+    ncurses \
     ncurses-devel \
     perl \
     perl-WWW-Curl \
+    readline \
     readline-devel \
     rpm-build \
     unzip \

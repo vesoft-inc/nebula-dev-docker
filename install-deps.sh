@@ -47,7 +47,7 @@ cd ${NEBULA_HOME}/gperf-3.1
 CXXFLAGS=${EXTRA_PIC_CXXFLAGS} CFLAGS=$CXXFLAGS CPPFLAGS=$CXXFLAGS LDFLAGS=${EXTRA_LDFLAGS} ./configure --prefix=${INSTALL_PATH} --enable-shared=no
 make && make install
 
-# Install krb5-1.16.3
+# Install krb5-1.16.3, depends on bison
 wget -qO - https://github.com/krb5/krb5/archive/krb5-1.16.3-final.tar.gz | tar zxf - -C ${NEBULA_HOME}
 cd ${NEBULA_HOME}/krb5-krb5-1.16.3-final/src
 autoreconf
