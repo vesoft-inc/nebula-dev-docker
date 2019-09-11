@@ -2,10 +2,12 @@ FROM centos:7
 
 LABEL maintainer="yee.yi@vesoft.com"
 
-# We choose an alternative toolchain to compile all Nebula Graph dependencies rather than provided rpm
-# packages. Install gcc-8 in devtoolset-8, enable devtoolset-8 environment variables.
+# We choose an alternative devtoolset-8 toolchain to compile all Nebula Graph dependencies rather than provided rpm
+# packages. After installing devtoolset-8, enable related environment variables.
 #
-# TODO(yee): compile nebula thirdparty libraries like the method in install-dep.sh
+# devtoolset-8 reference: http://mirror.centos.org/centos/7/sclo/x86_64/rh/devtoolset-8
+#
+# TODO(yee): compile nebula thirdparty libraries like methods in install-dep.sh
 
 RUN yum update -y \
   && yum install -y centos-release-scl \
@@ -45,6 +47,7 @@ WORKDIR ${NEBULA_HOME}
 
 COPY ./install-deps.sh ${NEBULA_HOME}/
 
+# Install nebula thirdparty dependent libraries
 RUN ${NEBULA_HOME}/install-deps.sh
 
 # Build and Install thirdparty
