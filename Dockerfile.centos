@@ -1,0 +1,60 @@
+FROM centos:7
+
+LABEL maintainer="yee.yi@vesoft.com"
+
+# We choose an alternative devtoolset-8 toolchain to compile all Nebula Graph dependencies rather than provided rpm
+# packages. After installing devtoolset-8, enable related environment variables.
+#
+# devtoolset-8 reference: http://mirror.centos.org/centos/7/sclo/x86_64/rh/devtoolset-8
+#
+# TODO(yee): compile nebula thirdparty libraries like methods in install-dep.sh
+
+RUN yum update -y \
+  && yum install -y centos-release-scl \
+  && yum install -y devtoolset-8 \
+  && yum install -y \
+    autoconf \
+    autoconf-archive \
+    automake \
+    file \
+    git \
+    java-1.8.0-openjdk \
+    java-1.8.0-openjdk-devel \
+    libtool \
+    make \
+    maven \
+    ncurses \
+    ncurses-devel \
+    perl \
+    perl-WWW-Curl \
+    readline \
+    readline-devel \
+    rpm-build \
+    unzip \
+    vim \
+    wget \
+    xz-devel \
+  && yum clean all \
+  && rm -rf /var/cache/yum
+
+RUN scl enable devtoolset-8 -- bash \
+  && mkdir -p /home/nebula \
+  && ln -snf /opt/rh/devtoolset-8/enable /etc/profile.d/devtoolset-8-enable.sh
+
+ENV NEBULA_HOME /home/nebula
+
+WORKDIR ${NEBULA_HOME}
+
+COPY ./install-deps.sh ${NEBULA_HOME}/
+
+# Install nebula thirdparty dependent libraries
+RUN ${NEBULA_HOME}/install-deps.sh
+
+# Build and Install thirdparty
+RUN git clone --single-branch --branch master https://github.com/vesoft-inc/nebula-3rdparty.git ${NEBULA_HOME}/nebula-3rdparty \
+  && cd ${NEBULA_HOME}/nebula-3rdparty \
+  && . /etc/profile.d/devtoolset-8-enable.sh \
+  && cmake -DSKIP_JAVA_JAR=ON . \
+  && make && make install \
+  && cd ${NEBULA_HOME} \
+  && rm -rf ${NEBULA_HOME}/*
