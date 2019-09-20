@@ -37,18 +37,20 @@ RUN yum update -y \
   && yum clean all \
   && rm -rf /var/cache/yum
 
+ENV NEBULA_HOME /home/nebula
+ENV DEVTOOLSET_DIR /opt/rh/devtoolset-8
+ENV DEVTOOLSET_PROFILE_PATH /etc/profile.d/devtoolset-8-enable.sh
+
 RUN scl enable devtoolset-8 -- bash \
   && mkdir -p /home/nebula \
-  && ln -snf /opt/rh/devtoolset-8/enable /etc/profile.d/devtoolset-8-enable.sh
-
-ENV NEBULA_HOME /home/nebula
+  && ln -snf ${DEVTOOLSET_DIR}/enable ${DEVTOOLSET_PROFILE_PATH}
 
 WORKDIR ${NEBULA_HOME}
 
 COPY ./install-deps.sh ${NEBULA_HOME}/
 
 # Install nebula thirdparty dependent libraries
-RUN ${NEBULA_HOME}/install-deps.sh
+RUN ${NEBULA_HOME}/install-deps.sh ${NEBULA_HOME} ${DEVTOOLSET_DIR}/root/usr ${DEVTOOLSET_PROFILE_PATH}
 
 # Build and Install thirdparty
 RUN git clone --single-branch --branch master https://github.com/vesoft-inc/nebula-3rdparty.git ${NEBULA_HOME}/nebula-3rdparty \
