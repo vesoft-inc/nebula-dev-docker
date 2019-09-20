@@ -12,6 +12,8 @@ RUN yum update -y && yum -y install \
     boost-static \
     bzip2-devel \
     cmake \
+    clang \
+    clang-tools-extra \
     curl \
     file \
     flex \
