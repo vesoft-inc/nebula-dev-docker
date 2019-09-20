@@ -19,6 +19,7 @@ RUN yum update -y && yum -y install \
     flex \
     gcc \
     gcc-c++ \
+    gdb \
     git \
     gperf \
     hostname \
