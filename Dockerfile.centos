@@ -55,6 +55,6 @@ RUN git clone --single-branch --branch master https://github.com/vesoft-inc/nebu
   && cd ${NEBULA_HOME}/nebula-3rdparty \
   && . /etc/profile.d/devtoolset-8-enable.sh \
   && cmake -DSKIP_JAVA_JAR=ON . \
-  && make && make install \
+  && make -j $(nproc) && make install \
   && cd ${NEBULA_HOME} \
   && rm -rf ${NEBULA_HOME}/*

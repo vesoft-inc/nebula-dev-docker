@@ -50,7 +50,7 @@ RUN mkdir -p /home/nebula \
   && git clone --single-branch --branch master https://github.com/vesoft-inc/nebula-3rdparty.git /home/nebula/nebula-3rdparty \
   && cd /home/nebula/nebula-3rdparty \
   && cmake -DSKIP_JAVA_JAR=ON . \
-  && make && make install \
+  && make -j $(nproc) && make install \
   && cd /home/nebula \
   && rm -rf /home/nebula/*
 
