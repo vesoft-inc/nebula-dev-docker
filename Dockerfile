@@ -12,11 +12,14 @@ RUN yum update -y && yum -y install \
     boost-static \
     bzip2-devel \
     cmake \
+    clang \
+    clang-tools-extra \
     curl \
     file \
     flex \
     gcc \
     gcc-c++ \
+    gdb \
     git \
     gperf \
     hostname \
@@ -50,7 +53,7 @@ RUN mkdir -p /home/nebula \
   && git clone --depth 1 --single-branch --branch master https://github.com/vesoft-inc/nebula-3rdparty.git /home/nebula/nebula-3rdparty \
   && cd /home/nebula/nebula-3rdparty \
   && cmake -DSKIP_JAVA_JAR=ON . \
-  && make && make install \
+  && make -j $(nproc) && make install \
   && cd /home/nebula \
   && rm -rf /home/nebula/*
 
