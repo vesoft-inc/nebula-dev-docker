@@ -1,19 +1,19 @@
-ARG VERSION=6
+ARG VERSION=16.04
 
-FROM centos:${VERSION}
+FROM ubuntu:${VERSION}
 
 ARG AREA=U
 
-RUN yum update -y && yum -y install \
+RUN apt-get update && apt-get install -y \
+    curl \
     gdb \
     git \
-    rpm-build \
     sudo \
     vim \
+    wget \
   && curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula/master/build_dep.sh -o /tmp/nebula_build_dep.sh \
   && bash /tmp/nebula_build_dep.sh ${AREA} \
-  && yum clean all \
-  && rm -rf /var/cache/yum /tmp/nebula_build_dep.sh
+  && rm -rf /var/lib/apt/lists/* /tmp/nebula_build_dep.sh
 
 RUN mkdir -p /home/nebula
 
