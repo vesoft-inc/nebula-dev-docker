@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
+VER=7
+
 if [ "$DOCKER_TAG" = "centos6" ]; then
-  docker build -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} --build-arg VERSION=6 --build-arg AREA=U .
+  VER=6
 elif [ "$DOCKER_TAG" = "centos7" ]; then
-  docker build -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} --build-arg VERSION=7 --build-arg AREA=U .
+  VER=7
 elif [ "$DOCKER_TAG" = "ubuntu16" ]; then
-  docker build -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} --build-arg VERSION=16.04 --build-arg AREA=U .
+  VER=16.04
 elif [ "$DOCKER_TAG" = "ubuntu18" ]; then
-  docker build -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} --build-arg VERSION=18.04 --build-arg AREA=U .
+  VER=18.04
 fi
+
+docker build -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} --build-arg VERSION=${VER} --build-arg AREA=U .
