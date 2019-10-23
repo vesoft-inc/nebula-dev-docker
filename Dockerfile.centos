@@ -10,12 +10,10 @@ RUN yum update -y && yum -y install \
     rpm-build \
     sudo \
     vim \
+  && curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula/master/build_dep.sh -o /tmp/nebula_build_dep.sh \
+  && bash /tmp/nebula_build_dep.sh ${AREA} \
   && yum clean all \
-  && rm -rf /var/cache/yum
-
-RUN curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula/master/build_dep.sh -o /tmp/nebula_build_dep.sh && \
-  bash /tmp/nebula_build_dep.sh ${AREA} && \
-  rm -rf /tmp/nebula_build_dep.sh
+  && rm -rf /var/cache/yum /tmp/nebula_build_dep.sh
 
 RUN mkdir -p /home/nebula
 
