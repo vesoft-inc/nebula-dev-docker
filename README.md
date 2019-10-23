@@ -5,9 +5,11 @@ Use `docker` to build [*Nebula*](https://github.com/vesoft-inc/nebula) project.
 At this moment, we have provided following docker images for developers:
 
 - `vesoft/nebula-dev:centos6`
-- `vesoft/nebula-dev:centos7` <- latest
+- `vesoft/nebula-dev:centos7`
 - `vesoft/nebula-dev:ubuntu1604`
 - `vesoft/nebula-dev:ubuntu1804`
+
+And the `vesoft/nebula-dev:centos7` image is also tagged as `vesoft/nebula-dev:latest`.
 
 ## Usage
 
