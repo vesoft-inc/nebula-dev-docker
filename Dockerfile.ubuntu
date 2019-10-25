@@ -5,6 +5,7 @@ FROM ubuntu:${VERSION}
 ARG AREA=U
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
     curl \
     gdb \
     git \
