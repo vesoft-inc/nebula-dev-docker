@@ -2,8 +2,6 @@ ARG VERSION=16.04
 
 FROM ubuntu:${VERSION}
 
-ARG AREA=U
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
@@ -12,9 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     sudo \
     vim \
     wget \
-  && curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula/master/build_dep.sh -o /tmp/nebula_build_dep.sh \
-  && bash /tmp/nebula_build_dep.sh ${AREA} \
-  && rm -rf /var/lib/apt/lists/* /tmp/nebula_build_dep.sh
+  && bash -c "$(curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula/master/build_dep.sh)" \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /home/nebula
 
