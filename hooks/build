@@ -12,4 +12,4 @@ elif [ "$DOCKER_TAG" = "ubuntu1804" ]; then
   VER=18.04
 fi
 
-docker build -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} --build-arg VERSION=${VER} --build-arg AREA=U .
+docker build -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} --build-arg VERSION=${VER} .
