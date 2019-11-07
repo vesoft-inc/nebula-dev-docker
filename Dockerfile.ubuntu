@@ -5,10 +5,8 @@ FROM ubuntu:${VERSION}
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
-    gdb \
     git \
     sudo \
-    vim \
     wget \
   && bash -c "$(curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula/master/build_dep.sh)" \
   && rm -rf /var/lib/apt/lists/*
