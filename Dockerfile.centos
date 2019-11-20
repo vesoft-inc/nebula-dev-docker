@@ -2,6 +2,9 @@ ARG VERSION=6
 
 FROM centos:${VERSION}
 
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN yum update -y && yum -y install \
     gdb \
     git \
@@ -11,9 +14,6 @@ RUN yum update -y && yum -y install \
   && bash -c "$(curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula/master/build_dep.sh)" \
   && yum clean all \
   && rm -rf /var/cache/yum
-
-ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN mkdir -p /home/nebula
 
