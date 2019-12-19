@@ -1,10 +1,17 @@
-ARG VERSION=16.04
+ARG VERSION=xenial
 ARG DEBIAN_FRONTEND=noninteractive
 
 FROM ubuntu:${VERSION}
 
+ARG VERSION=xenial
+
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get update && apt-get install -y --no-install-recommends wget gnupg2
+RUN wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key|apt-key add -
+RUN echo "\
+deb http://apt.llvm.org/${VERSION}/ llvm-toolchain-${VERSION}-8 main \n\
+deb-src http://apt.llvm.org/${VERSION}/ llvm-toolchain-${VERSION}-8 main" >> /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -12,7 +19,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     sudo \
     tzdata \
-    wget \
+    clang-8 \
+    lld-8 \
+    clang-tools-8 \
+    clang-tidy-8 \
+    libfuzzer-8-dev \
+    libc++-8-dev \
+    libc++abi-8-dev \
   && bash -c "$(curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula/master/build_dep.sh)" \
   && rm -rf /var/lib/apt/lists/*
 

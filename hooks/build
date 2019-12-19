@@ -7,9 +7,9 @@ if [ "$DOCKER_TAG" = "centos6" ]; then
 elif [ "$DOCKER_TAG" = "centos7" ]; then
   VER=7
 elif [ "$DOCKER_TAG" = "ubuntu1604" ]; then
-  VER=16.04
+  VER=xenial
 elif [ "$DOCKER_TAG" = "ubuntu1804" ]; then
-  VER=18.04
+  VER=bionic
 fi
 
 docker build -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} --build-arg VERSION=${VER} .
