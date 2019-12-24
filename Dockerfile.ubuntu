@@ -7,13 +7,15 @@ ARG VERSION=xenial
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt-get update && apt-get install -y --no-install-recommends wget gnupg2
-RUN wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key|apt-key add -
+RUN apt-get update && apt-get install -y --no-install-recommends wget gnupg2 \
+  && rm -rf /var/lib/apt/lists/*
+RUN wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
 RUN echo "\
 deb http://apt.llvm.org/${VERSION}/ llvm-toolchain-${VERSION}-8 main \n\
 deb-src http://apt.llvm.org/${VERSION}/ llvm-toolchain-${VERSION}-8 main" >> /etc/apt/sources.list.d/llvm.list
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ccache \
     ca-certificates \
     curl \
     git \
@@ -29,6 +31,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && bash -c "$(curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula/master/build_dep.sh)" \
   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /home/nebula
+RUN mkdir -p /home/nebula /ccache
+ENV CCACHE_DIR=/ccache
+COPY ./ccache/ccache.conf /ccache/ccache.conf
 
 WORKDIR /home/nebula
