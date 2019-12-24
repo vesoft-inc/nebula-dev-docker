@@ -5,7 +5,9 @@ FROM centos:${VERSION}
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN yum update -y && yum -y install \
+RUN yum update -y && yum install -y epel-release \
+  && yum install -y \
+    ccache \
     gdb \
     git \
     rpm-build \
@@ -15,6 +17,8 @@ RUN yum update -y && yum -y install \
   && yum clean all \
   && rm -rf /var/cache/yum
 
-RUN mkdir -p /home/nebula
+RUN mkdir -p /home/nebula /data/ccache
+ENV CCACHE_DIR=/data/ccache
+COPY ./ccache/ccache.conf /data/ccache/ccache.conf
 
 WORKDIR /home/nebula
