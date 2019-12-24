@@ -17,8 +17,8 @@ RUN yum update -y && yum install -y epel-release \
   && yum clean all \
   && rm -rf /var/cache/yum
 
-RUN mkdir -p /home/nebula /ccache
-ENV CCACHE_DIR=/ccache
-COPY ./ccache/ccache.conf /ccache/ccache.conf
+RUN mkdir -p /home/nebula /data/ccache
+ENV CCACHE_DIR=/data/ccache
+COPY ./ccache/ccache.conf /data/ccache/ccache.conf
 
 WORKDIR /home/nebula

@@ -31,8 +31,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && bash -c "$(curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula/master/build_dep.sh)" \
   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /home/nebula /ccache
-ENV CCACHE_DIR=/ccache
-COPY ./ccache/ccache.conf /ccache/ccache.conf
+RUN mkdir -p /home/nebula /data/ccache
+ENV CCACHE_DIR=/data/ccache
+COPY ./ccache/ccache.conf /data/ccache/ccache.conf
 
 WORKDIR /home/nebula
