@@ -5,14 +5,15 @@ FROM centos:${VERSION}
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN yum update -y && yum install -y epel-release \
+RUN yum update -y && yum install -y centos-release-scl epel-release \
   && yum install -y \
     ccache \
-    gdb \
+    devtoolset-7 \
     git \
     rpm-build \
     sudo \
     vim \
+  && scl enable devtoolset-7 bash \
   && bash -c "$(curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula/master/build_dep.sh)" \
   && yum clean all \
   && rm -rf /var/cache/yum
