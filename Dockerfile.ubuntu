@@ -9,23 +9,20 @@ ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
     ca-certificates \
     ccache \
     curl \
-    flex \
     gettext \
     git \
     gnupg2 \
-    gperf \
-    sudo \
-    tzdata \
+    libc-dev \
     libreadline-dev \
     lsb-core \
     m4 \
     make \
     ncurses-dev \
-    software-properties-common \
+    sudo \
+    tzdata \
     unzip \
     wget \
     xz-utils \
@@ -37,14 +34,16 @@ WORKDIR /root
 RUN curl -fsSL https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5-Linux-x86_64.tar.gz -O \
   && tar zxf cmake*.tar.gz -C /opt  \
   && rm -rf cmake*.tar.gz
-ENV PATH=${PATH}:/opt/cmake-3.15.5-Linux-x86_64/bin
 
-# Install gcc/g++ 7
-RUN apt-get install -y software-properties-common \
-  && add-apt-repository ppa:ubuntu-toolchain-r/test \
-  && apt-get update \
-  && apt-get install -y --no-install-recommends gcc-7 g++-7 \
-  && rm -rf /var/lib/apt/lists/*
+ENV PATH=${PATH}:/opt/cmake-3.15.5-Linux-x86_64/bin:/opt/vesoft/toolset/gcc/7.5.0/bin
+ENV CC=/opt/vesoft/toolset/gcc/7.5.0/bin/gcc
+ENV CXX=/opt/vesoft/toolset/gcc/7.5.0/bin/g++
+
+# Install nebula third-party dependencies
+RUN git clone --branch master --depth 1 https://github.com/vesoft-inc/nebula.git \
+  && ./nebula/third-party/install-gcc.sh \
+  && ./nebula/third-party/install-third-party.sh \
+  && rm -rf nebula
 
 # Install llvm toolchain
 COPY ./apt/llvm-${VERSION}.list /etc/apt/sources.list.d/llvm.list
@@ -59,11 +58,3 @@ RUN wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key 
     libc++-8-dev \
     libc++abi-8-dev \
   && rm -rf /var/lib/apt/lists/*
-
-ENV CC=gcc-7
-ENV CXX=g++-7
-
-# Install nebula third-party dependencies
-RUN git clone --branch master --depth 1 https://github.com/vesoft-inc/nebula.git \
-  && ./nebula/third-party/install-third-party.sh \
-  && rm -rf nebula
