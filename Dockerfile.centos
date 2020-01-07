@@ -9,11 +9,10 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
   && yum install -y \
     ccache \
     curl \
-    devtoolset-7 \
-    devtoolset-7-libasan-devel \
     gettext \
     git \
-    gperf \
+    glibc-headers \
+    glibc-devel \
     m4 \
     make \
     ncurses-devel \
@@ -27,8 +26,6 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
     xz \
     zlib-devel \
     lcov \
-  && scl enable devtoolset-7 bash \
-  && hash -r \
   && yum clean all \
   && rm -rf /var/cache/yum
 
@@ -39,12 +36,13 @@ RUN curl -fsSL https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-
   && tar zxf cmake*.tar.gz -C /opt  \
   && rm -rf cmake*.tar.gz
 
-ENV PATH=${PATH}:/opt/cmake-3.15.5-Linux-x86_64/bin:/opt/rh/devtoolset-7/root/usr/bin
-ENV CC=/opt/rh/devtoolset-7/root/usr/bin/gcc
-ENV CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
-ENV GCOV=/opt/rh/devtoolset-7/root/usr/bin/gcov
+ENV PATH=${PATH}:/opt/cmake-3.15.5-Linux-x86_64/bin:/opt/vesoft/toolset/gcc/7.5.0/bin
+ENV CC=/opt/vesoft/toolset/gcc/7.5.0/bin/gcc
+ENV CXX=/opt/vesoft/toolset/gcc/7.5.0/bin/g++
+ENV GCOV=/opt/vesoft/toolset/gcc/7.5.0/bin/gcov
 
 # Install nebula third-party dependencies
 RUN git clone --depth 1 --branch master https://github.com/vesoft-inc/nebula.git \
+  && ./nebula/third-party/install-gcc.sh \
   && ./nebula/third-party/install-third-party.sh \
   && rm -rf nebula
