@@ -26,6 +26,7 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
     wget \
     xz \
     zlib-devel \
+    lcov \
   && scl enable devtoolset-7 bash \
   && hash -r \
   && yum clean all \
@@ -41,6 +42,7 @@ RUN curl -fsSL https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-
 ENV PATH=${PATH}:/opt/cmake-3.15.5-Linux-x86_64/bin:/opt/rh/devtoolset-7/root/usr/bin
 ENV CC=/opt/rh/devtoolset-7/root/usr/bin/gcc
 ENV CXX=/opt/rh/devtoolset-7/root/usr/bin/g++
+ENV GCOV=/opt/rh/devtoolset-7/root/usr/bin/gcov
 
 # Install nebula third-party dependencies
 RUN git clone --depth 1 --branch master https://github.com/vesoft-inc/nebula.git \
