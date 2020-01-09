@@ -13,6 +13,7 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
     git \
     glibc-headers \
     glibc-devel \
+    lcov \
     m4 \
     make \
     ncurses-devel \
@@ -38,6 +39,7 @@ RUN curl -fsSL https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-
 ENV PATH=${PATH}:/opt/cmake-3.15.5-Linux-x86_64/bin:/opt/vesoft/toolset/gcc/7.5.0/bin
 ENV CC=/opt/vesoft/toolset/gcc/7.5.0/bin/gcc
 ENV CXX=/opt/vesoft/toolset/gcc/7.5.0/bin/g++
+ENV GCOV=/opt/vesoft/toolset/gcc/7.5.0/bin/gcov
 
 # Install nebula third-party dependencies
 RUN git clone --depth 1 --branch master https://github.com/vesoft-inc/nebula.git \
