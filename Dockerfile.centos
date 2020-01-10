@@ -11,8 +11,8 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
     curl \
     gettext \
     git \
-    glibc-headers \
     glibc-devel \
+    glibc-headers \
     lcov \
     m4 \
     make \

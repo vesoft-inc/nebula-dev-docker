@@ -51,10 +51,12 @@ RUN wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key 
   && apt-get update \
   && apt-get install -y --no-install-recommends \
     clang-8 \
-    clang-tools-8 \
+    clang-format-8 \
     clang-tidy-8 \
-    lld-8 \
-    libfuzzer-8-dev \
+    clang-tools-8 \
     libc++-8-dev \
     libc++abi-8-dev \
+    libfuzzer-8-dev \
+    lld-8 \
+    llvm-8 \
   && rm -rf /var/lib/apt/lists/*
