@@ -59,4 +59,5 @@ RUN wget --no-check-certificate -O - https://apt.llvm.org/llvm-snapshot.gpg.key 
     libfuzzer-8-dev \
     lld-8 \
     llvm-8 \
+  && ln -snf /usr/bin/llvm-symbolizer-8 /usr/bin/llvm-symbolizer \
   && rm -rf /var/lib/apt/lists/*
