@@ -17,4 +17,6 @@ At first, you should install `docker` in your machine and then pull the [`vesoft
 After that you can use following commands to build `Nebula` sources.
 
     $ docker pull vesoft/nebula-dev
-    $ ./run.sh /path/to/nebula/root/directory
+    $ curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula-dev-docker/master/run.sh -o run.sh
+    $ chmod +x run.sh
+    $ ./run.sh /path/to/nebula/directory ubuntu1804
