@@ -8,6 +8,8 @@ ARG VERSION=xenial
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+ENV LANG=en_US.utf8
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
@@ -16,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gnupg2 \
     libc-dev \
     libreadline-dev \
+    locales-all \
     lsb-core \
     m4 \
     make \
