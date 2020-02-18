@@ -35,7 +35,7 @@ RUN curl -fsSL https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-
   && tar zxf cmake*.tar.gz -C /opt  \
   && rm -rf cmake*.tar.gz
 
-ENV PATH=/opt/cmake-3.15.5-Linux-x86_64/bin:/opt/vesoft/toolset/clang/9.0.0/bin:${PATH}
+ENV PATH=${PATH}:/opt/cmake-3.15.5-Linux-x86_64/bin:/opt/vesoft/toolset/clang/9.0.0/bin
 ENV CCACHE_CPP2=1
 ENV CC=/opt/vesoft/toolset/clang/9.0.0/bin/gcc
 ENV CXX=/opt/vesoft/toolset/clang/9.0.0/bin/g++
