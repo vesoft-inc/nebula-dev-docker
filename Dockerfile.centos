@@ -67,5 +67,6 @@ RUN wget -qO- https://github.com/ccache/ccache/releases/download/v3.7.7/ccache-3
   && cd ../ && rm -rf ccache-*
 
 # Install lcov to /usr/local/bin
+# require master to make gcc9 happy
 RUN git clone https://github.com/linux-test-project/lcov.git \
   && cd lcov && make install && cd ../ && rm -rf lcov
