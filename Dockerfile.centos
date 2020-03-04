@@ -17,6 +17,7 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
     m4 \
     make \
     ncurses-devel \
+    openldap-devel \
     readline-devel \
     redhat-lsb-core \
     rpm-build \
@@ -66,8 +67,7 @@ RUN wget -qO- https://github.com/ccache/ccache/releases/download/v3.7.7/ccache-3
   && make install \
   && cd ../ && rm -rf ccache-*
 
-# Install lcov to /usr/local/bin
-# require master to make gcc9 happy
-RUN git clone --depth=1 --branch=master https://github.com/linux-test-project/lcov.git \
+# Install lcov to /usr/local/bin, require master to make gcc9 happy
+RUN git clone --depth=1 --branch=master --single-branch https://github.com/linux-test-project/lcov.git \
   && cd lcov && git checkout 40580cd65909bc8324ae09b36bca2e178652ff3f \
   && make install && cd ../ && rm -rf lcov
