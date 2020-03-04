@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     gnupg2 \
     libc-dev \
+    libldap2-dev \
     libreadline-dev \
     locales-all \
     lsb-core \
