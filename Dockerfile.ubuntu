@@ -14,7 +14,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
     gettext \
-    git \
     gnupg2 \
     libc-dev \
     libldap2-dev \
@@ -29,6 +28,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     wget \
     xz-utils \
+    libcurl4-gnutls-dev \
+    libexpat1-dev \
+    libz-dev \
+    libssl-dev \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
@@ -47,6 +50,14 @@ SHELL ["/bin/bash", "-c"]
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/dutor/nebula-gears/master/install) --prefix=/opt/vesoft/ \
   && /opt/vesoft/bin/install-llvm --version=9.0.0
+
+# Install git 2.25
+RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \
+  && cd git-2.25.0 \
+  && make configure \
+  && ./configure --prefix=/usr \
+  && make -j$(nproc) && make install \
+  && cd ../ && rm -rf git-2.25.0
 
 # Install nebula third-party dependencies
 RUN git clone --branch master --depth 1 https://github.com/vesoft-inc/nebula.git \

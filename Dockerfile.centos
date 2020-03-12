@@ -11,7 +11,6 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
   && yum install -y \
     curl \
     gettext \
-    git \
     glibc-devel \
     glibc-headers \
     m4 \
@@ -31,6 +30,10 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
     perl-JSON \
     perl-PerlIO-gzip \
     perl-Digest-MD5 \
+    autoconf \
+    curl-devel \
+    expat-devel \
+    openssl-devel \
   && yum clean all \
   && rm -rf /var/cache/yum
 
@@ -53,6 +56,14 @@ SHELL ["/bin/bash", "-c"]
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/dutor/nebula-gears/master/install) --prefix=/opt/vesoft/ \
   && /opt/vesoft/bin/install-llvm --version=9.0.0
+
+# Install git 2.25
+RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \
+  && cd git-2.25.0 \
+  && make configure \
+  && ./configure --prefix=/usr \
+  && make -j$(nproc) && make install \
+  && cd ../ && rm -rf git-2.25.0
 
 # Install nebula third-party dependencies
 RUN git clone --depth 1 --branch master https://github.com/vesoft-inc/nebula.git \
