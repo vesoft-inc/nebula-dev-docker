@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libexpat1-dev \
     libz-dev \
     libssl-dev \
+    autoconf \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
