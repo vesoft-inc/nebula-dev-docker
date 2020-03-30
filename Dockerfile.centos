@@ -82,3 +82,8 @@ RUN wget -qO- https://github.com/ccache/ccache/releases/download/v3.7.7/ccache-3
 RUN git clone --depth=1 --branch=master --single-branch https://github.com/linux-test-project/lcov.git \
   && cd lcov && git checkout 40580cd65909bc8324ae09b36bca2e178652ff3f \
   && make install && cd ../ && rm -rf lcov
+
+# Install ossutil64
+RUN wget -q http://gosspublic.alicdn.com/ossutil/1.6.10/ossutil64 \
+  && mv ossutil64 /usr/bin \
+  && chmod +x /usr/bin/ossutil64
