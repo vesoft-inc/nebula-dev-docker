@@ -87,3 +87,8 @@ RUN git clone --branch=master --single-branch https://github.com/linux-test-proj
 
 # fastcov
 RUN pip3 install --no-cache-dir fastcov
+
+# Install ossutil64
+RUN wget -q http://gosspublic.alicdn.com/ossutil/1.6.10/ossutil64 \
+  && mv ossutil64 /usr/bin \
+  && chmod +x /usr/bin/ossutil64
