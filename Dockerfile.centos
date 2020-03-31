@@ -2,6 +2,8 @@ ARG VERSION=6
 
 FROM centos:${VERSION}
 
+ARG VERSION=6
+
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -86,4 +88,4 @@ RUN git clone --branch=master --single-branch https://github.com/linux-test-proj
   && make install && cd ../ && rm -rf lcov
 
 # fastcov
-RUN pip3 install --no-cache-dir fastcov
+RUN if [ "x${VERSION}" == "x7" ]; then pip3 install --no-cache-dir fastcov; fi
