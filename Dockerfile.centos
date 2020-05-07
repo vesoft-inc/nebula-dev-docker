@@ -35,6 +35,7 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
     autoconf \
     curl-devel \
     expat-devel \
+    openssh-clients \
     openssl-devel \
     # For fastcov
     python3-pip \
@@ -44,12 +45,12 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
 WORKDIR /root
 
 # Install cmake 3.15
-RUN mkdir -p /opt \
+RUN mkdir -p /opt/vesoft/toolset/cmake \
   && curl -fsSL https://github.com/Kitware/CMake/releases/download/v3.15.5/cmake-3.15.5-Linux-x86_64.tar.gz -O \
-  && tar zxf cmake*.tar.gz -C /opt  \
+  && tar zxf cmake*.tar.gz -C /opt/vesoft/toolset/cmake --strip-components=1 \
   && rm -rf cmake*.tar.gz
 
-ENV PATH=${PATH}:/opt/cmake-3.15.5-Linux-x86_64/bin:/opt/vesoft/toolset/clang/9.0.0/bin
+ENV PATH=${PATH}:/opt/vesoft/toolset/cmake/bin:/opt/vesoft/toolset/clang/9.0.0/bin
 ENV CCACHE_CPP2=1
 ENV CC=/opt/vesoft/toolset/clang/9.0.0/bin/gcc
 ENV CXX=/opt/vesoft/toolset/clang/9.0.0/bin/g++
