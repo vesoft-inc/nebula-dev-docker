@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     wget \
     xz-utils \
+    python3-pip \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
