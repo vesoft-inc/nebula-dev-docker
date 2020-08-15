@@ -60,7 +60,8 @@ SHELL ["/bin/bash", "-c"]
 
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/dutor/nebula-gears/master/install) --prefix=/opt/vesoft/ \
-  && /opt/vesoft/bin/install-llvm --version=9.0.0
+  && /opt/vesoft/bin/install-llvm --version=9.0.0 \
+  && ln -snf /opt/vesoft/toolset/clang/9.0.0/bin/llvm-symbolizer /usr/bin/llvm-symbolizer
 
 # Install git 2.25
 RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \
