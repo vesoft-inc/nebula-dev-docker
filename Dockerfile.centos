@@ -11,7 +11,10 @@ ENV LANG=en_US.utf8
 
 RUN yum update -y && yum install -y centos-release-scl epel-release \
   && yum install -y \
+    autoconf \
     curl \
+    curl-devel \
+    expat-devel \
     gettext \
     glibc-devel \
     glibc-headers \
@@ -19,6 +22,14 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
     make \
     ncurses-devel \
     openldap-devel \
+    openssh-clients \
+    openssl-devel \
+    # for lcov
+    perl-JSON \
+    perl-PerlIO-gzip \
+    perl-Digest-MD5 \
+    python3-devel \
+    python3-pip \
     readline-devel \
     redhat-lsb-core \
     rpm-build \
@@ -28,17 +39,6 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
     wget \
     xz \
     zlib-devel \
-    # For lcov
-    perl-JSON \
-    perl-PerlIO-gzip \
-    perl-Digest-MD5 \
-    autoconf \
-    curl-devel \
-    expat-devel \
-    openssh-clients \
-    openssl-devel \
-    # For fastcov
-    python3-pip \
   && yum clean all \
   && rm -rf /var/cache/yum
 
