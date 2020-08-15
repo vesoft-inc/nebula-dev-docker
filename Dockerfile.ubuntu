@@ -79,5 +79,5 @@ RUN wget -qO- https://github.com/ccache/ccache/releases/download/v3.7.7/ccache-3
 
 # Install ossutil64
 RUN wget -q http://gosspublic.alicdn.com/ossutil/1.6.10/ossutil64 \
-  && mv ossutil64 /usr/bin \
+  && mv ossutil64 /usr/bin/ \
   && chmod +x /usr/bin/ossutil64
