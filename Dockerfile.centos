@@ -11,7 +11,10 @@ ENV LANG=en_US.utf8
 
 RUN yum update -y && yum install -y centos-release-scl epel-release \
   && yum install -y \
+    autoconf \
     curl \
+    curl-devel \
+    expat-devel \
     gettext \
     glibc-devel \
     glibc-headers \
@@ -19,6 +22,14 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
     make \
     ncurses-devel \
     openldap-devel \
+    openssh-clients \
+    openssl-devel \
+    # for lcov
+    perl-JSON \
+    perl-PerlIO-gzip \
+    perl-Digest-MD5 \
+    python3-devel \
+    python3-pip \
     readline-devel \
     redhat-lsb-core \
     rpm-build \
@@ -28,17 +39,6 @@ RUN yum update -y && yum install -y centos-release-scl epel-release \
     wget \
     xz \
     zlib-devel \
-    # For lcov
-    perl-JSON \
-    perl-PerlIO-gzip \
-    perl-Digest-MD5 \
-    autoconf \
-    curl-devel \
-    expat-devel \
-    openssh-clients \
-    openssl-devel \
-    # For fastcov
-    python3-pip \
   && yum clean all \
   && rm -rf /var/cache/yum
 
@@ -60,7 +60,8 @@ SHELL ["/bin/bash", "-c"]
 
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/dutor/nebula-gears/master/install) --prefix=/opt/vesoft/ \
-  && /opt/vesoft/bin/install-llvm --version=9.0.0
+  && /opt/vesoft/bin/install-llvm --version=9.0.0 \
+  && ln -snf /opt/vesoft/toolset/clang/9.0.0/bin/llvm-symbolizer /usr/bin/llvm-symbolizer
 
 # Install git 2.25
 RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \
@@ -93,5 +94,5 @@ RUN if [ "x${VERSION}" == "x7" ]; then pip3 install --no-cache-dir fastcov; fi
 
 # Install ossutil64
 RUN wget -q http://gosspublic.alicdn.com/ossutil/1.6.10/ossutil64 \
-  && mv ossutil64 /usr/bin \
+  && mv ossutil64 /usr/bin/ \
   && chmod +x /usr/bin/ossutil64

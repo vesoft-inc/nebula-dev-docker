@@ -29,12 +29,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     make \
     ncurses-dev \
     openssh-client \
+    python3-dev \
+    python3-pip \
     sudo \
     tzdata \
     unzip \
     wget \
     xz-utils \
-    python3-pip \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
@@ -53,7 +54,8 @@ SHELL ["/bin/bash", "-c"]
 
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/dutor/nebula-gears/master/install) --prefix=/opt/vesoft/ \
-  && /opt/vesoft/bin/install-llvm --version=9.0.0
+  && /opt/vesoft/bin/install-llvm --version=9.0.0 \
+  && ln -snf /opt/vesoft/toolset/clang/9.0.0/bin/llvm-symbolizer /usr/bin/llvm-symbolizer
 
 # Install git 2.25
 RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \
@@ -78,5 +80,5 @@ RUN wget -qO- https://github.com/ccache/ccache/releases/download/v3.7.7/ccache-3
 
 # Install ossutil64
 RUN wget -q http://gosspublic.alicdn.com/ossutil/1.6.10/ossutil64 \
-  && mv ossutil64 /usr/bin \
+  && mv ossutil64 /usr/bin/ \
   && chmod +x /usr/bin/ossutil64
