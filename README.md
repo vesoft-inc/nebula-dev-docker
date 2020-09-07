@@ -6,8 +6,10 @@ At this moment, we have provided following docker images for developers:
 
 - `vesoft/nebula-dev:centos6`
 - `vesoft/nebula-dev:centos7`
+- `vesoft/nebula-dev:centos8`
 - `vesoft/nebula-dev:ubuntu1604`
 - `vesoft/nebula-dev:ubuntu1804`
+- `vesoft/nebula-dev:ubuntu2004`
 
 And the `vesoft/nebula-dev:centos7` image is also tagged as `vesoft/nebula-dev:latest`.
 
