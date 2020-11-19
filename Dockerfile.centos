@@ -39,6 +39,8 @@ RUN yum update -y && yum install -y epel-release \
     wget \
     xz \
     zlib-devel \
+# client
+    libatomic \
   && yum clean all \
   && rm -rf /var/cache/yum
 
