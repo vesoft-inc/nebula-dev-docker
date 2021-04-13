@@ -1,0 +1,52 @@
+name: docker
+
+on:
+  push:
+    branches:
+      - 'master'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  docker:
+    name: build nebula-dev docker images
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        service:
+          - centos7
+          - centos8
+          - ubuntu1604
+          - ubuntu1804
+          - ubuntu2004
+    steps:
+      - id: tag
+        run: |
+          case ${{ matrix.service }} in
+            centos7) VER=7;;
+            centos8) VER=8;;
+            ubuntu1604) VER=xenial;;
+            ubuntu1804) VER=bionic;;
+            ubuntu2004) VER=focal;;
+            *) VER=7;;
+          esac
+          TAG=$(grep -Eo '[[:alpha:]]+' <<< "${{ matrix.service }}")
+          echo "::set-output name=VER::$VER"
+          echo "::set-output name=TAG::$TAG"
+      - uses: docker/setup-qemu-action@v1
+      - uses: docker/setup-buildx-action@v1
+      - uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - uses: docker/build-push-action@v2
+        with:
+          file: ./Dockerfile.${{ steps.tag.outputs.TAG }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/nebula-dev:${{ matrix.service }}
+          platforms: linux/arm64/v8,linux/amd64
+          push: true
+          build-args: |
+            VERSION=${{ steps.tag.outputs.VER }}
