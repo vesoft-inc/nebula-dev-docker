@@ -19,4 +19,5 @@ After that you can use following commands to build `Nebula` sources.
 
     $ docker pull vesoft/nebula-dev:centos7
     $ curl -fsSL https://raw.githubusercontent.com/vesoft-inc/nebula-dev-docker/master/run.sh -o run.sh
+    $ chmod +x run.sh
     $ ./run.sh /path/to/nebula/directory centos7
