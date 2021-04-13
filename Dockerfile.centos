@@ -1,8 +1,8 @@
-ARG VERSION=6
+ARG VERSION=7
 
 FROM centos:${VERSION}
 
-ARG VERSION=6
+ARG VERSION=7
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -39,7 +39,7 @@ RUN yum update -y && yum install -y epel-release \
     wget \
     xz \
     zlib-devel \
-# client
+    # client
     libatomic \
   && yum clean all \
   && rm -rf /var/cache/yum
@@ -63,9 +63,12 @@ ENV GCOV=/opt/vesoft/toolset/clang/9.0.0/bin/gcov
 SHELL ["/bin/bash", "-c"]
 
 # Install gcc and llvm by nebula-gears
-RUN bash <(curl -s https://raw.githubusercontent.com/dutor/nebula-gears/master/install) --prefix=/opt/vesoft/ \
+RUN curl -fsSL https://github.com/dutor/nebula-gears/releases/latest/download/nebula-gears-installer.sh -o nebula-gears-installer.sh \
+  && chmod +x nebula-gears-installer.sh \
+  && ./nebula-gears-installer.sh --prefix=/opt/vesoft/ \
   && /opt/vesoft/bin/install-llvm --version=9.0.0 \
-  && ln -snf /opt/vesoft/toolset/clang/9.0.0/bin/llvm-symbolizer /usr/bin/llvm-symbolizer
+  && ln -snf /opt/vesoft/toolset/clang/9.0.0/bin/llvm-symbolizer /usr/bin/llvm-symbolizer \
+  && rm -rf ./nebula-gears-installer.sh
 
 # Install git 2.25
 RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \

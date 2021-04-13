@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-TAG=${2:-latest}
+TAG=${2:-centos7}
 
 docker run --rm -ti \
   --security-opt seccomp=unconfined \
