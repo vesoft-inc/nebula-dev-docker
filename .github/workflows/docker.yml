@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        service:
+        os:
           - centos7
           - centos8
           - ubuntu1604
@@ -25,7 +25,7 @@ jobs:
     steps:
       - id: tag
         run: |
-          case ${{ matrix.service }} in
+          case ${{ matrix.os }} in
             centos7) VER=7;;
             centos8) VER=8;;
             ubuntu1604) VER=xenial;;
@@ -33,7 +33,7 @@ jobs:
             ubuntu2004) VER=focal;;
             *) VER=7;;
           esac
-          TAG=$(grep -Eo '[[:alpha:]]+' <<< "${{ matrix.service }}")
+          TAG=$(grep -Eo '[[:alpha:]]+' <<< "${{ matrix.os }}")
           echo "::set-output name=VER::$VER"
           echo "::set-output name=TAG::$TAG"
       - uses: docker/setup-qemu-action@v1
@@ -45,7 +45,7 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           file: ./Dockerfile.${{ steps.tag.outputs.TAG }}
-          tags: ${{ secrets.DOCKER_USERNAME }}/nebula-dev:${{ matrix.service }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/nebula-dev:${{ matrix.os }}
           platforms: linux/arm64/v8,linux/amd64
           push: true
           build-args: |
