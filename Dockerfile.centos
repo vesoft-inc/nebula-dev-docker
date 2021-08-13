@@ -54,18 +54,18 @@ RUN mkdir -p /opt/vesoft/toolset/cmake \
   && tar zxf cmake*.tar.gz -C /opt/vesoft/toolset/cmake --strip-components=1 \
   && rm -rf cmake*.tar.gz
 
-ENV PATH=/opt/vesoft/toolset/cmake/bin:/opt/vesoft/toolset/clang/9.0.0/bin:${PATH}
+ENV PATH=/opt/vesoft/toolset/cmake/bin:/opt/vesoft/toolset/clang/10.0.0/bin:${PATH}
 ENV CCACHE_CPP2=1
-ENV CC=/opt/vesoft/toolset/clang/9.0.0/bin/gcc
-ENV CXX=/opt/vesoft/toolset/clang/9.0.0/bin/g++
-ENV GCOV=/opt/vesoft/toolset/clang/9.0.0/bin/gcov
+ENV CC=/opt/vesoft/toolset/clang/10.0.0/bin/gcc
+ENV CXX=/opt/vesoft/toolset/clang/10.0.0/bin/g++
+ENV GCOV=/opt/vesoft/toolset/clang/10.0.0/bin/gcov
 
 SHELL ["/bin/bash", "-c"]
 
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/vesoft-inc/nebula-gears/master/install) --prefix=/opt/vesoft/ \
-  && /opt/vesoft/bin/install-llvm --version=9.0.0 \
-  && ln -snf /opt/vesoft/toolset/clang/9.0.0/bin/llvm-symbolizer /usr/bin/llvm-symbolizer
+  && /opt/vesoft/bin/install-llvm --version=10.0.0 \
+  && ln -snf /opt/vesoft/toolset/clang/10.0.0/bin/llvm-symbolizer /usr/bin/llvm-symbolizer
 
 # Install git 2.25
 RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \
