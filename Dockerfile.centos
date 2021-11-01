@@ -39,7 +39,7 @@ RUN yum update -y && yum install -y epel-release \
     wget \
     xz \
     zlib-devel \
-# client
+    # client
     libatomic \
   && yum clean all \
   && rm -rf /var/cache/yum
@@ -76,15 +76,13 @@ RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C .
   && make -j$(nproc) && make install \
   && cd ../ && rm -rf git-2.25.0
 
-# Install nebula third-party 1.0
-RUN git clone --depth 1 --branch v1-head --single-branch https://github.com/vesoft-inc/nebula.git \
-  && ./nebula/third-party/install-third-party.sh \
-  && rm -rf nebula
-
-# Install nebula third-party 2.0
-RUN git clone --depth 1 --branch master --single-branch https://github.com/vesoft-inc/nebula-third-party.git \
-    && ./nebula-third-party/install-third-party.sh \
-    && rm -rf nebula-third-party
+# Install nebula third-party 1.0 and 2.0
+RUN git clone https://github.com/vesoft-inc/nebula-third-party.git \
+    && cd nebula-third-party \
+    && ./install-third-party.sh \
+    && git checkout v1.0 \
+    && ./install-third-party.sh \
+    && cd .. && rm -rf nebula-third-party
 
 # Install ccache
 RUN wget -qO- https://github.com/ccache/ccache/releases/download/v3.7.7/ccache-3.7.7.tar.gz | tar zxf - -C ./ \
