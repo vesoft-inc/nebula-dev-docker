@@ -49,7 +49,7 @@ RUN if [ "x${VERSION}" != "x8" ]; then yum install -y centos-release-scl; fi
 WORKDIR /root
 
 ENV TOOLSET_CLANG_DIR=/opt/vesoft/toolset/clang/10.0.0
-ENV PATH=${TOOLSET_CLANG_DIR}/bin:${PATH}
+ENV PATH=/opt/vesoft/toolset/cmake/bin:${TOOLSET_CLANG_DIR}/bin:${PATH}
 ENV CCACHE_CPP2=1
 ENV CC=${TOOLSET_CLANG_DIR}/bin/gcc
 ENV CXX=${TOOLSET_CLANG_DIR}/bin/g++
