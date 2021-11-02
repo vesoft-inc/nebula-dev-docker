@@ -79,6 +79,6 @@ RUN wget -qO- https://github.com/ccache/ccache/releases/download/v3.7.7/ccache-3
   && cd ../ && rm -rf ccache-*
 
 # Install ossutil64
-RUN wget -q http://gosspublic.alicdn.com/ossutil/1.6.10/ossutil64 \
-  && mv ossutil64 /usr/bin/ \
+RUN [[ $(uname -m) = "aarch64" ]] && ARCH="arm"; \
+  wget -q -O /usr/bin/ossutil64 "http://gosspublic.alicdn.com/ossutil/1.7.0/ossutil${ARCH}64" \
   && chmod +x /usr/bin/ossutil64
