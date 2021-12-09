@@ -21,6 +21,7 @@ RUN yum update -y && yum install -y epel-release \
     m4 \
     make \
     ncurses-devel \
+    ninja-build \
     openldap-devel \
     openssh-clients \
     openssl-devel \
