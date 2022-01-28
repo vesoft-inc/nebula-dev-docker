@@ -49,21 +49,20 @@ RUN if [ "x${VERSION}" != "x8" ]; then yum install -y centos-release-scl; fi
 
 WORKDIR /root
 
-ENV TOOLSET_CLANG_DIR=/opt/vesoft/toolset/clang/10.0.0
-ENV PATH=/opt/vesoft/toolset/cmake/bin:${TOOLSET_CLANG_DIR}/bin:${PATH}
+ENV TOOLSET_GCC_DIR=/opt/vesoft/toolset/clang/10.0.0
+ENV PATH=/opt/vesoft/toolset/cmake/bin:${TOOLSET_GCC_DIR}/bin:${PATH}
 ENV CCACHE_CPP2=1
-ENV CC=${TOOLSET_CLANG_DIR}/bin/gcc
-ENV CXX=${TOOLSET_CLANG_DIR}/bin/g++
-ENV GCOV=${TOOLSET_CLANG_DIR}/bin/gcov
+ENV CC=${TOOLSET_GCC_DIR}/bin/gcc
+ENV CXX=${TOOLSET_GCC_DIR}/bin/g++
+ENV GCOV=${TOOLSET_GCC_DIR}/bin/gcov
 
 SHELL ["/bin/bash", "-c"]
 
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/vesoft-inc/nebula-gears/master/install) --prefix=/opt/vesoft/ \
-  && /opt/vesoft/bin/install-llvm --version=10.0.0 \
-  && /opt/vesoft/bin/install-cmake \
-  && ln -snf ${TOOLSET_CLANG_DIR}/bin/llvm-symbolizer /usr/bin/llvm-symbolizer
-
+  && /opt/vesoft/bin/install-gcc --version=9.3.0 \
+  && /opt/vesoft/bin/install-cmake 
+  
 # Install git 2.25
 RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \
   && cd git-2.25.0 \
