@@ -77,9 +77,9 @@ RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C .
 RUN git clone https://github.com/vesoft-inc/nebula-third-party.git \
   && cd nebula-third-party \
   && ./install-third-party.sh \
-  && git checkout v2.0 \
+  && git checkout -b v2.0 origin/v2.0 \
   && ./install-third-party.sh \
-  && git checkout v1.0 \
+  && git checkout -b v1.0 origin/v1.0 \
   && ./install-third-party.sh \
   && cd .. && rm -rf nebula-third-party
 
