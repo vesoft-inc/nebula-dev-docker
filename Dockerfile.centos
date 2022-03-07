@@ -103,3 +103,8 @@ RUN if [ "x${VERSION}" == "x7" ]; then pip3 install --no-cache-dir fastcov; fi
 RUN [[ $(uname -m) = "aarch64" ]] && ARCH="arm"; \
   wget -q -O /usr/bin/ossutil64 "http://gosspublic.alicdn.com/ossutil/1.7.0/ossutil${ARCH}64" \
   && chmod +x /usr/bin/ossutil64
+
+RUN [[ $(uname -m) = "aarch64" ]] && ARCH="arm" || ARCH="amd"; \
+    curl -fsSL "https://go.dev/dl/go1.17.8.linux-${ARCH}64.tar.gz" -O && tar zxf go1.17.8* -C /usr/local/ && rm -rf go1.17.8*
+
+ENV PATH=/usr/local/go/bin:${PATH}
