@@ -52,7 +52,7 @@ SHELL ["/bin/bash", "-c"]
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/vesoft-inc/nebula-gears/master/install) --prefix=/opt/vesoft/ \
   && /opt/vesoft/bin/install-gcc --version=9.3.0 \
-  && /opt/vesoft/bin/install-cmake 
+  && /opt/vesoft/bin/install-cmake
 
 # Install git 2.25
 RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \
@@ -84,3 +84,8 @@ RUN wget -qO- https://github.com/ccache/ccache/releases/download/v3.7.7/ccache-3
 RUN [[ $(uname -m) = "aarch64" ]] && ARCH="arm"; \
   wget -q -O /usr/bin/ossutil64 "http://gosspublic.alicdn.com/ossutil/1.7.0/ossutil${ARCH}64" \
   && chmod +x /usr/bin/ossutil64
+
+RUN [[ $(uname -m) = "aarch64" ]] && ARCH="arm" || ARCH="amd"; \
+    curl -fsSL "https://go.dev/dl/go1.17.8.linux-${ARCH}64.tar.gz" -O && tar zxf go1.17.8* -C /usr/local/ && rm -rf go1.17.8*
+
+ENV PATH=/usr/local/go/bin:${PATH}
