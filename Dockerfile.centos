@@ -51,6 +51,7 @@ WORKDIR /root
 
 ENV TOOLSET_CLANG_DIR=/opt/vesoft/toolset/clang/10.0.0
 ENV TOOLSET_GCC_DIR=/opt/vesoft/toolset/gcc/9.3.0
+ENV LD_LIBRARY_PATH=/opt/vesoft/toolset/gcc/9.3.0/lib64:$LD_LIBRARY_PATH
 ENV PATH=/opt/vesoft/toolset/cmake/bin:${TOOLSET_GCC_DIR}/bin:${TOOLSET_CLANG_DIR}/bin:${PATH}
 ENV CCACHE_CPP2=1
 ENV CC=${TOOLSET_GCC_DIR}/bin/gcc
