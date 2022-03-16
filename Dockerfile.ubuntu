@@ -44,6 +44,7 @@ WORKDIR /root
 
 ENV TOOLSET_GCC_DIR=/opt/vesoft/toolset/gcc/9.3.0
 ENV PATH=/opt/vesoft/toolset/cmake/bin:${TOOLSET_GCC_DIR}/bin:${PATH}
+ENV LD_LIBRARY_PATH=/opt/vesoft/toolset/gcc/9.3.0/lib64:$LD_LIBRARY_PATH
 ENV CC=${TOOLSET_GCC_DIR}/bin/gcc
 ENV CXX=${TOOLSET_GCC_DIR}/bin/g++
 
