@@ -25,6 +25,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libz-dev \
     locales-all \
     lsb-core \
+    # FIXME: Please remove following libev libraries after third party rebuilt.
+    libev4 \
+    libev-dev \
     m4 \
     make \
     ncurses-dev \
@@ -52,7 +55,7 @@ SHELL ["/bin/bash", "-c"]
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/vesoft-inc/nebula-gears/master/install) --prefix=/opt/vesoft/ \
   && /opt/vesoft/bin/install-gcc --version=9.3.0 \
-  && /opt/vesoft/bin/install-cmake 
+  && /opt/vesoft/bin/install-cmake
 
 # Install git 2.25
 RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \
