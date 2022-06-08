@@ -1,9 +1,5 @@
 name: docker
-
-on:
-  push:
-    branches:
-      - master
+on: workflow_dispatch
 
 defaults:
   run:
