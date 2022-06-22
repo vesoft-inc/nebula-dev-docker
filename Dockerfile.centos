@@ -9,6 +9,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ENV LANG=en_US.utf8
 
+RUN if [ "x${VERSION}" = "x8" ]; then cd /etc/yum.repos.d/ && \
+                                   sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
+                                   sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*; fi
+
 RUN yum update -y && yum install -y epel-release \
   && yum install -y \
     autoconf \
@@ -24,7 +28,6 @@ RUN yum update -y && yum install -y epel-release \
     m4 \
     make \
     ncurses-devel \
-    ninja-build \
     openldap-devel \
     openssh-clients \
     openssl-devel \
@@ -44,11 +47,11 @@ RUN yum update -y && yum install -y epel-release \
     xz \
     zlib-devel \
     # client
-    libatomic \
-  && yum clean all \
+    libatomic 
+RUN if [ "x${VERSION}" != "x8" ]; then yum install -y ninja-build centos-release-scl; fi
+RUN if [ "x${VERSION}" = "x8" ]; then yum --enablerepo=powertools install -y ninja-build; fi
+RUN yum clean all \
   && rm -rf /var/cache/yum
-
-RUN if [ "x${VERSION}" != "x8" ]; then yum install -y centos-release-scl; fi
 
 WORKDIR /root
 
