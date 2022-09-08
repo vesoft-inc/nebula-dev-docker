@@ -79,11 +79,11 @@ RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C .
   && make -j$(nproc) && make install \
   && cd ../ && rm -rf git-2.25.0
 
-# Install nebula third-party 1.0 and 2.0 and 3.0
+# Install nebula third-party 1.0 and 2.0 and 3.3
 RUN git clone https://github.com/vesoft-inc/nebula-third-party.git \
   && cd nebula-third-party \
   && ./install-third-party.sh \
-  && git checkout origin/v3.0 \
+  && git checkout origin/release-3.3 \
   && ./install-third-party.sh \
   && git checkout origin/v2.0 \
   && ./install-third-party.sh \
