@@ -113,3 +113,7 @@ RUN if [ "x${VERSION}" == "x7" ]; then pip3 install --no-cache-dir fastcov; fi
 RUN [[ $(uname -m) = "aarch64" ]] && ARCH="arm"; \
   wget -q -O /usr/bin/ossutil64 "http://gosspublic.alicdn.com/ossutil/1.7.0/ossutil${ARCH}64" \
   && chmod +x /usr/bin/ossutil64
+
+#Install mold
+RUN mkdir /usr/local/mold && wget -qO- https://github.com/rui314/mold/releases/download/v1.10.1/mold-1.10.1-$(uname -m)-linux.tar.gz | tar xzf - --strip-components=1 -C /usr/local/mold/
+ENV PATH=/usr/local/mold:${PATH}
