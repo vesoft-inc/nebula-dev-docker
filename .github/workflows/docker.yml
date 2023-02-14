@@ -1,5 +1,9 @@
 name: docker
-on: workflow_dispatch
+on: 
+  push:
+    branches:
+      - master
+  workflow_dispatch:
 
 defaults:
   run:
@@ -13,8 +17,8 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - {"name": "centos7", "version": 7, "file": "centos"}
-          - {"name": "centos8", "version": 8, "file": "centos"}
+          - {"name": "centos7", "file": "centos7"}
+          - {"name": "centos8", "file": "centos8"}
           - {"name": "ubuntu1604", "version": "xenial", "file": "ubuntu"}
           - {"name": "ubuntu1804", "version": "bionic", "file": "ubuntu"}
           - {"name": "ubuntu2004", "version": "focal", "file": "ubuntu"}
