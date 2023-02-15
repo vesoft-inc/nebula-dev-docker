@@ -9,8 +9,7 @@ RUN cd /etc/yum.repos.d/ && \
     sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
 
 RUN yum update -y && yum install -y epel-release \
-  && yum  --enablerepo=powertools install -y \
-    ninja-build \
+   && yum install -y \
     autoconf \
     curl \
     curl-devel \
@@ -44,7 +43,8 @@ RUN yum update -y && yum install -y epel-release \
     zlib-devel \
     # client
     libatomic \
-    && yum clean all && rm -rf /var/cache/yum
+   && yum --enablerepo=powertools install -y ninja-build \
+   && yum clean all && rm -rf /var/cache/yum
 
 WORKDIR /root
 
