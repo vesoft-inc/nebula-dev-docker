@@ -61,8 +61,13 @@ SHELL ["/bin/bash", "-c"]
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/vesoft-inc/nebula-gears/master/install) --prefix=/opt/vesoft/ \
   && /opt/vesoft/bin/install-gcc --version=9.3.0 \
-  && /opt/vesoft/bin/install-llvm --version=10.0.0 \
-  && /opt/vesoft/bin/install-cmake
+  && /opt/vesoft/bin/install-llvm --version=10.0.0 
+
+# Install cmake
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.20.0/cmake-3.20.0-linux-$(uname -m).sh \
+    && chmod +x cmake-3.20.0-linux-$(uname -m).sh \
+    && ./cmake-3.20.0-linux-$(uname -m).sh --skip-license --prefix=/usr/local \
+    && rm cmake-3.20.0-linux-$(uname -m).sh
 
 # Install git 2.25
 RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \
