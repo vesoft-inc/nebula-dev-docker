@@ -18,7 +18,7 @@ jobs:
       matrix:
         os:
           - {"name": "centos7", "file": "centos7"}
-          # - {"name": "centos8", "file": "centos8"}
+          - {"name": "centos8", "file": "centos8"}
           # - {"name": "ubuntu1604", "version": "xenial", "file": "ubuntu"}
           # - {"name": "ubuntu1804", "version": "bionic", "file": "ubuntu"}
           - {"name": "ubuntu2004", "version": "focal", "file": "ubuntu"}
