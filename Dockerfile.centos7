@@ -106,12 +106,19 @@ RUN git clone --branch master --single-branch https://github.com/linux-test-proj
 # fastcov
 RUN pip3 install --no-cache-dir fastcov
 
-# Install ossutil64
-RUN [[ $(uname -m) = "aarch64" ]] && ARCH="arm"; \
-  wget -q -O /usr/bin/ossutil64 "http://gosspublic.alicdn.com/ossutil/1.7.0/ossutil${ARCH}64" \
-  && chmod +x /usr/bin/ossutil64
+# Install ossutil
+RUN curl https://gosspublic.alicdn.com/ossutil/install.sh | bash
 
 #Install mold
 RUN mkdir /usr/local/mold && wget -qO- https://oss-cdn.nebula-graph.com.cn/toolset/mold/mold-1.10.1-$(uname -m)-linux.tar.gz | tar xzf - --strip-components=1 -C /usr/local/mold/ \
     && ln -snf  /opt/vesoft/toolset/gcc/9.3.0/lib64/libstdc++.so.6 /usr/lib64/libstdc++.so.6
 ENV PATH=/usr/local/mold/bin:${PATH}
+
+#Install minio client
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
+        curl -O https://dl.min.io/client/mc/release/linux-amd64/mc; \
+    else \
+        curl -O https://dl.min.io/client/mc/release/linux-arm64/mc; \
+    fi \
+    && chmod +x mc \
+    && mv mc /usr/local/bin/
