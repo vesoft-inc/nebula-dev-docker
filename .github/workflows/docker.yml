@@ -6,6 +6,9 @@ on:
     paths:
       - 'Dockerfile.**'
   workflow_dispatch:
+  repository_dispatch:
+    types:
+      - nebula-third-party-build
 
 defaults:
   run:
