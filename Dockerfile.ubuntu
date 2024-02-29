@@ -97,6 +97,9 @@ RUN wget -qO- https://github.com/ccache/ccache/releases/download/v3.7.7/ccache-3
   && make install \
   && cd ../ && rm -rf ccache-*
 
+# fastcov
+RUN pip3 install --no-cache-dir fastcov
+
 # Install ossutil
 RUN curl https://gosspublic.alicdn.com/ossutil/install.sh | bash
   

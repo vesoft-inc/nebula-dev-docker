@@ -104,6 +104,9 @@ RUN git clone --branch master --single-branch https://github.com/linux-test-proj
   && cd lcov && git checkout 75fbae1cfc5027f818a0bb865bf6f96fab3202da \
   && make install && cd ../ && rm -rf lcov
 
+# fastcov
+RUN pip3 install --no-cache-dir fastcov
+
 # Install ossutil
 RUN curl https://gosspublic.alicdn.com/ossutil/install.sh | bash
 
