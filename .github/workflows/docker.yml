@@ -17,10 +17,7 @@ defaults:
 jobs:
   docker:
     name: docker
-    runs-on:
-      - self-hosted
-      - large
-      - amd64
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -47,5 +44,4 @@ jobs:
           push: true
           build-args: |
             VERSION=${{ matrix.os.version }}
-            THIRD_PARTY_URL_BASE=https://minio.vesoft-inc.com/rc-build/third-party
             THIRD_PARTY_VERSION=${{ github.event.client_payload.version }}
