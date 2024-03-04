@@ -44,4 +44,3 @@ jobs:
           push: true
           build-args: |
             VERSION=${{ matrix.os.version }}
-            THIRD_PARTY_VERSION=${{ github.event.client_payload.version }}
