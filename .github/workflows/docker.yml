@@ -42,4 +42,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: vesoft/nebula-dev:${{ matrix.os.name }}
           push: true
-          build-args: VERSION=${{ matrix.os.version }}
+          build-args: |
+            VERSION=${{ matrix.os.version }}
+            THIRD_PARTY_URL_BASE=https://minio.vesoft-inc.com/rc-build/third-party
