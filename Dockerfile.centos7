@@ -122,3 +122,12 @@ RUN if [ "$(uname -m)" = "x86_64" ]; then \
     fi \
     && chmod +x mc \
     && mv mc /usr/local/bin/
+
+# Install Node.js
+RUN cd /usr/src && \
+    wget https://nodejs.org/dist/v20.12.2/node-v20.12.2.tar.gz && \
+    tar -zxvf node-v20.12.2.tar.gz && \
+    cd node-v20.12.2 \
+    ./configure && \
+    make -j4 && \
+    make install
