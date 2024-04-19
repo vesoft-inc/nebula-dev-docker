@@ -125,9 +125,6 @@ RUN if [ "$(uname -m)" = "x86_64" ]; then \
 
 # Install Node.js
 RUN cd /usr/src && \
-    wget https://nodejs.org/dist/v20.12.2/node-v20.12.2.tar.gz && \
-    tar -zxvf node-v20.12.2.tar.gz && \
-    cd node-v20.12.2 \
-    ./configure && \
-    make -j4 && \
-    make install
+    wget https://unofficial-builds.nodejs.org/download/release/v20.12.1/node-v20.12.1-linux-x64-glibc-217.tar.gz && \
+    tar -zxf node-v20.12.1-linux-x64-glibc-217.tar.gz --strip-components=1 -C /usr/local/ && \
+    rm node-v20.12.1-linux-x64-glibc-217.tar.gz
