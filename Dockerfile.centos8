@@ -111,7 +111,7 @@ RUN pip3 install --no-cache-dir fastcov
 RUN curl https://gosspublic.alicdn.com/ossutil/install.sh | bash
 
 #Install mold
-RUN mkdir /usr/local/mold && wget -qO- https://github.com/rui314/mold/releases/download/v2.1.0/mold-v2.1.0-$(uname -m)-linux.tar.gz | tar xzf - --strip-components=1 -C /usr/local/mold/
+RUN mkdir /usr/local/mold && wget -qO- https://github.com/rui314/mold/releases/download/v2.1.0/mold-2.1.0-$(uname -m)-linux.tar.gz | tar xzf - --strip-components=1 -C /usr/local/mold/
 ENV PATH=/usr/local/mold/bin:${PATH}
 
 #Install minio client
