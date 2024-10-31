@@ -27,6 +27,7 @@ jobs:
           # - {"name": "ubuntu1604", "version": "xenial", "file": "ubuntu"}
           # - {"name": "ubuntu1804", "version": "bionic", "file": "ubuntu"}
           - {"name": "ubuntu2004", "version": "focal", "file": "ubuntu"}
+          - {"name": "ubuntu2404", "version": "noble", "file": "ubuntu2404"}
     steps:
       - uses: actions/checkout@v3
       - uses: docker/login-action@v2
