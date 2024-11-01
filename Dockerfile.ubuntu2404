@@ -55,10 +55,6 @@ RUN pip3 install --no-cache-dir fastcov
 # Install ossutil
 RUN curl https://gosspublic.alicdn.com/ossutil/install.sh | bash
 
-#Install mold
-RUN mkdir /usr/local/mold && wget -qO- https://github.com/rui314/mold/releases/download/v2.34.1/mold-2.34.1-$(uname -m)-linux.tar.gz | tar xzf - --strip-components=1 -C /usr/local/mold/
-ENV PATH=/usr/local/mold/bin:${PATH}
-
 #Install minio client
 RUN if [ "$(uname -m)" = "x86_64" ]; then \
         curl -O https://dl.min.io/client/mc/release/linux-amd64/mc; \
