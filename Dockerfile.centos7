@@ -48,7 +48,7 @@ RUN sed -i 's/^mirrorlist=/#mirrorlist=/g' /etc/yum.repos.d/CentOS-Base.repo && 
 WORKDIR /root
 
 ENV TOOLSET_CLANG_DIR=/opt/vesoft/toolset/clang/10.0.0
-ENV TOOLSET_GCC_DIR=/opt/vesoft/toolset/gcc/9.3.0
+ENV TOOLSET_GCC_DIR=/opt/vesoft/toolset/gcc/9.5.0
 ENV PATH=/opt/vesoft/toolset/cmake/bin:${TOOLSET_GCC_DIR}/bin:${TOOLSET_CLANG_DIR}/bin:${PATH}
 ENV CCACHE_CPP2=1
 ENV CC=${TOOLSET_GCC_DIR}/bin/gcc
@@ -59,7 +59,7 @@ SHELL ["/bin/bash", "-c"]
 
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/vesoft-inc/nebula-gears/master/install) --prefix=/opt/vesoft/ \
-  && /opt/vesoft/bin/install-gcc --version=9.3.0 \
+  && /opt/vesoft/bin/install-gcc --version=9.5.0 \
   && /opt/vesoft/bin/install-llvm --version=10.0.0 
 
 # Install cmake
