@@ -42,7 +42,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /root
 
 ENV TOOLSET_CLANG_DIR=/opt/vesoft/toolset/clang/10.0.0
-ENV TOOLSET_GCC_DIR=/opt/vesoft/toolset/gcc/9.3.0
+ENV TOOLSET_GCC_DIR=/opt/vesoft/toolset/gcc/9.5.0
 ENV PATH=/opt/vesoft/toolset/cmake/bin:${TOOLSET_GCC_DIR}/bin:${TOOLSET_CLANG_DIR}/bin:${PATH}
 ENV CC=${TOOLSET_GCC_DIR}/bin/gcc
 ENV CXX=${TOOLSET_GCC_DIR}/bin/g++
@@ -52,7 +52,7 @@ SHELL ["/bin/bash", "-c"]
 
 # Install gcc and llvm by nebula-gears
 RUN bash <(curl -s https://raw.githubusercontent.com/vesoft-inc/nebula-gears/master/install) --prefix=/opt/vesoft/ \
-  && /opt/vesoft/bin/install-gcc --version=9.3.0 \
+  && /opt/vesoft/bin/install-gcc --version=9.5.0 \
   && /opt/vesoft/bin/install-llvm --version=10.0.0
 
 # Install cmake
@@ -69,19 +69,9 @@ RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C .
   && make -j$(nproc) && make install \
   && cd ../ && rm -rf git-2.25.0
 
-# Install nebula third-party 1.0 and 2.0 and 3.0 and 3.3
+# Install nebula third-party master
 RUN git clone https://github.com/vesoft-inc/nebula-third-party.git \
     && cd nebula-third-party \
-    && ./install-third-party.sh \
-    && git checkout origin/release-3.3 \
-    && ./install-third-party.sh \
-    && git checkout origin/release-3.4-cloud \
-    && ./install-third-party.sh \
-    && git checkout origin/v3.0 \
-    && ./install-third-party.sh \
-    && git checkout origin/v2.0 \
-    && ./install-third-party.sh \
-    && git checkout origin/v1.0 \
     && ./install-third-party.sh \
     && cd .. && rm -rf nebula-third-party
 
