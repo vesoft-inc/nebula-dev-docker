@@ -6,8 +6,7 @@ ENV LANG=en_US.utf8
 SHELL ["/bin/bash", "-c"]
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN sed -i 's|^URIs: .*|URIs: http://nexus.vesoft-inc.com:8081/repository/ubuntu-2404/|' /etc/apt/sources.list.d/ubuntu.sources && \
-    apt update && apt install -y --no-install-recommends \
+RUN apt update && apt install -y --no-install-recommends \
     autoconf \
     ca-certificates \
     curl \
