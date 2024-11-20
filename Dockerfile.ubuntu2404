@@ -1,4 +1,4 @@
-FROM ubuntu:noble
+FROM ubuntu:24.04
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -6,7 +6,8 @@ ENV LANG=en_US.utf8
 SHELL ["/bin/bash", "-c"]
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN sed -i 's|^URIs: .*|URIs: http://nexus.vesoft-inc.com:8081/repository/ubuntu-2404/|' /etc/apt/sources.list.d/ubuntu.sources && \
+    apt update && apt install -y --no-install-recommends \
     autoconf \
     ca-certificates \
     curl \
@@ -37,6 +38,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     cmake \
     build-essential \
+    clang-17 \
+    clang-format-17 \
+    clang-tidy-17 \
+    clang-tools-17 \
     vim \
     ccache \
   && rm -rf /var/lib/apt/lists/*
@@ -50,7 +55,7 @@ RUN git clone https://github.com/vesoft-inc/nebula-third-party.git \
     && cd .. && rm -rf nebula-third-party
 
 # fastcov
-RUN pip3 install --no-cache-dir fastcov
+RUN pipx install fastcov && pipx ensurepath
 
 # Install ossutil
 RUN curl https://gosspublic.alicdn.com/ossutil/install.sh | bash
