@@ -1,0 +1,87 @@
+FROM ubuntu:focal
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV LANG=en_US.utf8
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    autoconf \
+    ca-certificates \
+    curl \
+    gettext \
+    gnupg2 \
+    libc-dev \
+    libcurl4-gnutls-dev \
+    libexpat1-dev \
+    libldap2-dev \
+    libreadline-dev \
+    libssl-dev \
+    libz-dev \
+    locales-all \
+    lsb-core \
+    m4 \
+    make \
+    ncurses-dev \
+    ninja-build \
+    openssh-client \
+    python3-dev \
+    python3-pip \
+    sudo \
+    tzdata \
+    unzip \
+    wget \
+    xz-utils \
+    lcov \
+    build-essential \
+    clang \
+    clang-format \
+    clang-tidy \
+    clang-tools \
+    vim \
+    ccache \
+    git \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /root
+
+#ENV TOOLSET_CLANG_DIR=/opt/vesoft/toolset/clang/10.0.0
+#ENV TOOLSET_GCC_DIR=/opt/vesoft/toolset/gcc/9.5.0
+#ENV PATH=/opt/vesoft/toolset/cmake/bin:${TOOLSET_GCC_DIR}/bin:${TOOLSET_CLANG_DIR}/bin:${PATH}
+#ENV CC=${TOOLSET_GCC_DIR}/bin/gcc
+#ENV CXX=${TOOLSET_GCC_DIR}/bin/g++
+ENV CCACHE_CPP2=1
+
+SHELL ["/bin/bash", "-c"]
+
+# Install gcc and llvm by nebula-gears
+#RUN bash <(curl -s https://raw.githubusercontent.com/vesoft-inc/nebula-gears/master/install) --prefix=/opt/vesoft/ \
+#  && /opt/vesoft/bin/install-gcc --version=9.5.0 \
+#  && /opt/vesoft/bin/install-llvm --version=10.0.0
+
+# Install cmake
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.20.0/cmake-3.20.0-linux-$(uname -m).sh \
+    && chmod +x cmake-3.20.0-linux-$(uname -m).sh \
+    && ./cmake-3.20.0-linux-$(uname -m).sh --skip-license --prefix=/usr/local \
+    && rm cmake-3.20.0-linux-$(uname -m).sh
+
+# Install nebula third-party master
+RUN git clone https://github.com/vesoft-inc/nebula-third-party.git \
+    && cd nebula-third-party \
+    && ./install-third-party.sh \
+    && cd .. && rm -rf nebula-third-party
+
+# fastcov
+RUN pip3 install --no-cache-dir fastcov
+
+# Install ossutil
+RUN curl https://gosspublic.alicdn.com/ossutil/install.sh | bash
+
+#Install minio client
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
+        curl -O https://dl.min.io/client/mc/release/linux-amd64/mc; \
+    else \
+        curl -O https://dl.min.io/client/mc/release/linux-arm64/mc; \
+    fi \
+    && chmod +x mc \
+    && mv mc /usr/local/bin/
