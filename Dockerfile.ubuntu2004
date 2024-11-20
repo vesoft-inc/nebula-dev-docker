@@ -1,10 +1,9 @@
-FROM ubuntu:24.04
+FROM ubuntu:20.04
 
+ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENV LANG=en_US.utf8
-SHELL ["/bin/bash", "-c"]
-ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt install -y --no-install-recommends \
     autoconf \
@@ -20,7 +19,7 @@ RUN apt update && apt install -y --no-install-recommends \
     libssl-dev \
     libz-dev \
     locales-all \
-    lsb-release \
+    lsb-core \
     m4 \
     make \
     ncurses-dev \
@@ -34,18 +33,27 @@ RUN apt update && apt install -y --no-install-recommends \
     wget \
     xz-utils \
     lcov \
-    git \
-    cmake \
     build-essential \
-    clang-17 \
-    clang-format-17 \
-    clang-tidy-17 \
-    clang-tools-17 \
+    clang \
+    clang-format \
+    clang-tidy \
+    clang-tools \
     vim \
     ccache \
+    git \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
+
+ENV CCACHE_CPP2=1
+
+SHELL ["/bin/bash", "-c"]
+
+# Install cmake
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.20.0/cmake-3.20.0-linux-$(uname -m).sh \
+    && chmod +x cmake-3.20.0-linux-$(uname -m).sh \
+    && ./cmake-3.20.0-linux-$(uname -m).sh --skip-license --prefix=/usr/local \
+    && rm cmake-3.20.0-linux-$(uname -m).sh
 
 # Install nebula third-party master
 RUN git clone https://github.com/vesoft-inc/nebula-third-party.git \
@@ -54,7 +62,7 @@ RUN git clone https://github.com/vesoft-inc/nebula-third-party.git \
     && cd .. && rm -rf nebula-third-party
 
 # fastcov
-RUN pipx install fastcov && pipx ensurepath
+RUN pip3 install --no-cache-dir fastcov
 
 # Install ossutil
 RUN curl https://gosspublic.alicdn.com/ossutil/install.sh | bash
