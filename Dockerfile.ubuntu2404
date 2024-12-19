@@ -1,0 +1,71 @@
+FROM ubuntu:24.04
+
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV LANG=en_US.utf8
+SHELL ["/bin/bash", "-c"]
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt update && apt install -y --no-install-recommends \
+    autoconf \
+    ca-certificates \
+    curl \
+    gettext \
+    gnupg2 \
+    libc-dev \
+    libcurl4-gnutls-dev \
+    libexpat1-dev \
+    libldap2-dev \
+    libreadline-dev \
+    libssl-dev \
+    libz-dev \
+    locales-all \
+    lsb-release \
+    m4 \
+    make \
+    ncurses-dev \
+    ninja-build \
+    openssh-client \
+    python3-dev \
+    pipx \
+    sudo \
+    tzdata \
+    unzip \
+    wget \
+    xz-utils \
+    lcov \
+    git \
+    cmake \
+    gcc-12 \
+    g++-12 \
+    clang-17 \
+    clang-format-17 \
+    clang-tidy-17 \
+    clang-tools-17 \
+    libclang-rt-17-dev \
+    vim \
+    ccache \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /root
+
+# Install nebula third-party master
+RUN git clone https://github.com/vesoft-inc/nebula-third-party.git \
+    && cd nebula-third-party \
+    && ./install-third-party.sh \
+    && cd .. && rm -rf nebula-third-party
+
+# fastcov
+RUN pipx install fastcov && pipx ensurepath
+
+# Install ossutil
+RUN curl https://gosspublic.alicdn.com/ossutil/install.sh | bash
+
+#Install minio client
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
+        curl -O https://dl.min.io/client/mc/release/linux-amd64/mc; \
+    else \
+        curl -O https://dl.min.io/client/mc/release/linux-arm64/mc; \
+    fi \
+    && chmod +x mc \
+    && mv mc /usr/local/bin/
