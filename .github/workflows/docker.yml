@@ -23,9 +23,7 @@ jobs:
       matrix:
         os:
           - {"name": "centos7", "file": "centos7"}
-          # - {"name": "centos8", "file": "centos8"}
-          # - {"name": "ubuntu1604", "version": "xenial", "file": "ubuntu"}
-          # - {"name": "ubuntu1804", "version": "bionic", "file": "ubuntu"}
+          - {"name": "centos8", "file": "centos8"}
           - {"name": "ubuntu2004", "version": "20.04", "file": "ubuntu2004"}
           - {"name": "ubuntu2404", "version": "24.04", "file": "ubuntu2404"}
     steps:
