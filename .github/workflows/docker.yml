@@ -23,19 +23,21 @@ jobs:
       matrix:
         os:
           - {"name": "centos7", "file": "centos7"}
-          # - {"name": "centos8", "file": "centos8"}
-          # - {"name": "ubuntu1604", "version": "xenial", "file": "ubuntu"}
-          # - {"name": "ubuntu1804", "version": "bionic", "file": "ubuntu"}
+          - {"name": "centos8", "file": "centos8"}
+          - {"name": "ubuntu1604", "version": "xenial", "file": "ubuntu"}
+          - {"name": "ubuntu1804", "version": "bionic", "file": "ubuntu"}
           - {"name": "ubuntu2004", "version": "focal", "file": "ubuntu"}
+          - {"name": "ubuntu2204", "version": "22.04", "file": "ubuntu2204"}
+          - {"name": "ubuntu2404", "version": "24.04", "file": "ubuntu2404"}
     steps:
-      - uses: actions/checkout@v3
-      - uses: docker/login-action@v2
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - uses: docker/setup-qemu-action@v2
-      - uses: docker/setup-buildx-action@v2
-      - uses: docker/build-push-action@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile.${{ matrix.os.file }}

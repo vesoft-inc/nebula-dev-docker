@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:22.04
 
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -36,17 +36,10 @@ RUN apt update && apt install -y --no-install-recommends \
     lcov \
     git \
     cmake \
-    gcc-12 \
-    g++-12 \
-    clang-17 \
-    clang-format-17 \
-    clang-tidy-17 \
-    clang-tools-17 \
-    libclang-rt-17-dev \
     vim \
     ccache \
-  && rm -rf /var/lib/apt/lists/* \
-  && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 120 --slave /usr/bin/g++ g++ /usr/bin/g++-12
+    build-essential \
+  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /root
 
