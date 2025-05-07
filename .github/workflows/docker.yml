@@ -25,6 +25,7 @@ jobs:
           - {"name": "centos7", "file": "centos7"}
           - {"name": "centos8", "file": "centos8"}
           - {"name": "ubuntu2004", "version": "20.04", "file": "ubuntu2004"}
+          - {"name": "ubuntu2204", "version": "22.04", "file": "ubuntu2204"}
           - {"name": "ubuntu2404", "version": "24.04", "file": "ubuntu2404"}
     steps:
       - uses: actions/checkout@v4
