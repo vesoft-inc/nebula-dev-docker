@@ -37,6 +37,8 @@ RUN apt update && apt install -y --no-install-recommends \
     git \
     cmake \
     build-essential \
+    llvm-17 \
+    lld-17 \
     clang-17 \
     clang-format-17 \
     clang-tidy-17 \
