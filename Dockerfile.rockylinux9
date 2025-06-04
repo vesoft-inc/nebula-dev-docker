@@ -6,6 +6,7 @@ ENV LANG=en_US.utf8
 
 # Rocky Linux 9 uses dnf instead of yum, and has different package names
 RUN dnf update -y && dnf install -y epel-release \
+   && dnf config-manager --set-enabled crb \
    && dnf install -y \
     autoconf \
     curl \
