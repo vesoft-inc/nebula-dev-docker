@@ -70,3 +70,10 @@ RUN if [ "$(uname -m)" = "x86_64" ]; then \
     fi \
     && chmod +x mc \
     && mv mc /usr/local/bin/
+
+# Install sccache
+RUN wget https://github.com/mozilla/sccache/releases/download/v0.10.0/sccache-v0.10.0-$(uname -m)-unknown-linux-musl.tar.gz && \
+    tar -xzf sccache-v0.10.0-$(uname -m)-unknown-linux-musl.tar.gz && \
+    mv sccache-v0.10.0-$(uname -m)-unknown-linux-musl/sccache /usr/local/bin/ && \
+    rm -rf sccache-v0.10.0-$(uname -m)-unknown-linux-musl* && \
+    chmod +x /usr/local/bin/sccache
