@@ -45,6 +45,8 @@ RUN dnf install -y epel-release && \
     cmake \
     git \
     lsb-release \
+    ccache \
+    lcov \
    && dnf clean all && rm -rf /var/cache/dnf
 
 WORKDIR /root
@@ -53,56 +55,18 @@ ENV CCACHE_CPP2=1
 
 SHELL ["/bin/bash", "-c"]
 
-# Install gcc and llvm by nebula-gears
-#RUN bash <(curl -s https://raw.githubusercontent.com/vesoft-inc/nebula-gears/master/install) --prefix=/opt/vesoft/ \
-#  && /opt/vesoft/bin/install-gcc --version=9.5.0 \
-#  && /opt/vesoft/bin/install-llvm --version=10.0.0
-
-# Install cmake
-#RUN wget https://github.com/Kitware/CMake/releases/download/v3.20.0/cmake-3.20.0-linux-$(uname -m).sh \
-#    && chmod +x cmake-3.20.0-linux-$(uname -m).sh \
-#    && ./cmake-3.20.0-linux-$(uname -m).sh --skip-license --prefix=/usr/local \
-#    && rm cmake-3.20.0-linux-$(uname -m).sh
-
-# Install git 2.25
-#RUN wget -qO- https://github.com/git/git/archive/v2.25.0.tar.gz | tar zxf - -C ./ \
-#  && cd git-2.25.0 \
-#  && make configure \
-#  && ./configure --prefix=/usr \
-#  && make -j$(nproc) && make install \
-#  && cd ../ && rm -rf git-2.25.0
-
 # Install nebula third-party master
-#RUN git clone https://github.com/vesoft-inc/nebula-third-party.git \
-#  && cd nebula-third-party \
-#  && git checkout add-rocky9 \
-#  && ./install-third-party.sh \
-#  && cd .. && rm -rf nebula-third-party
-COPY vesoft-third-party-5.1-x86_64-libc-2.34-gcc-11.5.0-abi-11.sh .
-RUN chmod +x vesoft-third-party-5.1-x86_64-libc-2.34-gcc-11.5.0-abi-11.sh && ./vesoft-third-party-5.1-x86_64-libc-2.34-gcc-11.5.0-abi-11.sh
-
-# Install ccache
-RUN wget -qO- https://github.com/ccache/ccache/releases/download/v3.7.7/ccache-3.7.7.tar.gz | tar zxf - -C ./ \
-  && cd ccache-3.7.7 \
-  && ./configure \
-  && make -j \
-  && make install \
-  && cd ../ && rm -rf ccache-*
-
-# Install lcov to /usr/local/bin, require master to make gcc9 happy
-RUN git clone --branch master --single-branch https://github.com/linux-test-project/lcov.git \
-  && cd lcov && git checkout 75fbae1cfc5027f818a0bb865bf6f96fab3202da \
-  && make install && cd ../ && rm -rf lcov
+RUN git clone https://github.com/vesoft-inc/nebula-third-party.git \
+  && cd nebula-third-party \
+  && git checkout master \
+  && ./install-third-party.sh \
+  && cd .. && rm -rf nebula-third-party
 
 # fastcov
 RUN pip3 install --no-cache-dir fastcov
 
 # Install ossutil
 RUN curl https://gosspublic.alicdn.com/ossutil/install.sh | bash
-
-#Install mold
-RUN mkdir /usr/local/mold && wget -qO- https://github.com/rui314/mold/releases/download/v2.1.0/mold-2.1.0-$(uname -m)-linux.tar.gz | tar xzf - --strip-components=1 -C /usr/local/mold/
-ENV PATH=/usr/local/mold/bin:${PATH}
 
 #Install minio client
 RUN if [ "$(uname -m)" = "x86_64" ]; then \
