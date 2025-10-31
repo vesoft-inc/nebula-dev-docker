@@ -19,6 +19,7 @@ RUN apt update && apt install -y --no-install-recommends \
     libreadline-dev \
     libssl-dev \
     libz-dev \
+    libomp-17-dev \
     locales-all \
     lsb-release \
     m4 \
