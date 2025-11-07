@@ -20,8 +20,6 @@ RUN yum update -y && yum install -y epel-release \
     # FIXME: Please remove following libev libraries after third party rebuilt.
     libev \
     libev-devel \
-    libomp \
-    libomp-devel \
     m4 \
     make \
     ncurses-devel \
