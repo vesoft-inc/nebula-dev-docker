@@ -40,7 +40,7 @@ jobs:
           context: .
           file: ./Dockerfile.${{ matrix.os.file }}
           platforms: linux/amd64,linux/arm64
-          tags: vesoft/nebula-dev:${{ matrix.os.name }}-v5-omp
+          tags: vesoft/nebula-dev:${{ matrix.os.name }}-v5
           push: true
           build-args: |
             VERSION=${{ matrix.os.version }}
